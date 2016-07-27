@@ -26,6 +26,8 @@
 
 namespace qtika {
 
+namespace mime {
+
 
 class MediaTypeData : public QSharedData
 {
@@ -92,7 +94,7 @@ public:
 
 
 const QString MediaTypeData::VALID_CHARS(QS(R"_(([^\(\)<>@,;:\\"\/\[\]\?=\s]+))_"));
-const QRegularExpression MediaTypeData::SPECIAL(QS("[\\(\\)<>@,;:\\\\\"/\\[\\]\\?=]"));
+const QRegularExpression MediaTypeData::SPECIAL(QS("([\\(\\)<>@,;:\\\\\"/\\[\\]\\?=])"));
 const QRegularExpression MediaTypeData::SPECIAL_OR_WHITESPACE(QS("[\\(\\)<>@,;:\\\\\"/\\[\\]\\?=\\s]"));
 const QRegularExpression MediaTypeData::TYPE_PATTERN("\\s*" % VALID_CHARS % "\\s*/\\s*" % VALID_CHARS % "\\s*($|;.*)");
 const QRegularExpression MediaTypeData::CHARSET_FIRST_PATTERN("\\s*(charset\\s*=\\s*[^;\\s]+)\\s*;\\s*" % VALID_CHARS % "\\s*/\\s*" % VALID_CHARS % "\\s*");
@@ -198,6 +200,13 @@ QMap<K, V> MediaTypeData::merge(const QMap<K, V> &a, const QMap<K, V> &b)
 }
 
 
+const MediaType MediaType::OCTET_STREAM = MediaType::parse(QS("application/octet-stream"));
+const MediaType MediaType::TEXT_PLAIN = MediaType::parse(QS("text/plain"));
+const MediaType MediaType::TEXT_HTML = MediaType::parse(QS("text/html"));
+const MediaType MediaType::APPLICATION_XML = MediaType::parse(QS("application/xml"));
+const MediaType MediaType::APPLICATION_ZIP = MediaType::parse(QS("application/zip"));
+
+
 MediaType::MediaType()
     : data(new MediaTypeData)
 {
@@ -231,7 +240,7 @@ MediaType::MediaType(const QString &type, const QString subtype, const MediaType
         if (match.hasMatch())
         {
             QString value = iter.value();
-            value.replace(MediaTypeData::SPECIAL, QS("\\0"));
+            value.replace(MediaTypeData::SPECIAL, QS("\\\\1"));
             data->string.append("\"" % value % "\"");
         }
         else
@@ -420,6 +429,36 @@ QSet<MediaType> MediaType::set(const QStringList &types)
 }
 
 
+MediaType MediaType::application(const QString &type)
+{
+    return parse("application/" % type);
+}
+
+
+MediaType MediaType::audio(const QString &type)
+{
+    return parse("audio/" % type);
+}
+
+
+MediaType MediaType::image(const QString &type)
+{
+    return parse("image/" % type);
+}
+
+
+MediaType MediaType::text(const QString &type)
+{
+    return parse("text/" % type);
+}
+
+
+MediaType MediaType::video(const QString &type)
+{
+    return parse("video/" % type);
+}
+
+
 bool operator==(const MediaType &lhs, const MediaType &rhs)
 {
     return lhs.toString() == rhs.toString();
@@ -437,5 +476,6 @@ uint qHash(const MediaType &lhs, uint seed)
     return qHash(lhs.toString(), seed);
 }
 
+}       // namespace mime
 
 }       // namespace qtika

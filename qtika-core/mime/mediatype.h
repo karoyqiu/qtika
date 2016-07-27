@@ -25,9 +25,14 @@
 
 namespace qtika {
 
+namespace mime {
+
 
 class MediaTypeData;
 
+/**
+ * Internet media type.
+ */
 class QTIKACORESHARED_EXPORT MediaType Q_DECL_FINAL
 {
 public:
@@ -105,6 +110,19 @@ public:
      */
     static QSet<MediaType> set(const QStringList &types);
 
+public:
+    static MediaType application(const QString &type);
+    static MediaType audio(const QString &type);
+    static MediaType image(const QString &type);
+    static MediaType text(const QString &type);
+    static MediaType video(const QString &type);
+
+    static const MediaType OCTET_STREAM;
+    static const MediaType TEXT_PLAIN;
+    static const MediaType TEXT_HTML;
+    static const MediaType APPLICATION_XML;
+    static const MediaType APPLICATION_ZIP;
+
 private:
     QSharedDataPointer<MediaTypeData> data;
 };
@@ -115,5 +133,7 @@ bool operator<(const MediaType &lhs, const MediaType &rhs);
 
 uint qHash(const MediaType &lhs, uint seed);
 
+
+}       // namespace mime
 
 }       // namespace qtika

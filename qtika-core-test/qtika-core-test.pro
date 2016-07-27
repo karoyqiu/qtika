@@ -13,27 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-QT       -= gui
+QT += core testlib
+QT -= gui
 
-TARGET = qtika-core
-TEMPLATE = lib
-CONFIG += warn_on
+CONFIG += c++11
 
-DEFINES += QTIKACORE_LIBRARY
+TARGET = qtika-core-test
+CONFIG += console testcase
+CONFIG -= app_bundle
 
-SOURCES += \
-    mime/mediatype.cpp
+TEMPLATE = app
+
+SOURCES += main.cpp \
+    mediatypetest.cpp
 
 HEADERS += \
-    qtika-core-global.h \
-    mime/mediatype.h \
-    stable.h
+    mediatypetest.h
 
-#PRECOMPILED_HEADER = qtika-core-global.h
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/release/ -lqtika-core
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/debug/ -lqtika-core
+else:unix: LIBS += -L$$OUT_PWD/../qtika-core/ -lqtika-core
 
-win32: QMAKE_CXXFLAGS_WARN_ON = /W4
-
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+INCLUDEPATH += $$PWD/../qtika-core
+DEPENDPATH += $$PWD/../qtika-core
