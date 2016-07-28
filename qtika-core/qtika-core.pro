@@ -17,7 +17,7 @@ QT       -= gui
 
 TARGET = qtika-core
 TEMPLATE = lib
-CONFIG += warn_on
+CONFIG += warn_on c++11
 
 DEFINES += QTIKACORE_LIBRARY
 
