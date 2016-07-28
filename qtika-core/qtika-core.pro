@@ -22,12 +22,14 @@ CONFIG += warn_on c++11
 DEFINES += QTIKACORE_LIBRARY
 
 SOURCES += \
-    mime/mediatype.cpp
+    mime/mediatype.cpp \
+    metadata/creativecommons.cpp
 
 HEADERS += \
     qtika-core-global.h \
     mime/mediatype.h \
-    stable.h
+    stable.h \
+    metadata/creativecommons.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
