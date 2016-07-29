@@ -128,10 +128,10 @@ private:
 };
 
 
-bool operator==(const MediaType &lhs, const MediaType &rhs);
-bool operator<(const MediaType &lhs, const MediaType &rhs);
+QTIKACORESHARED_EXPORT bool operator==(const MediaType &lhs, const MediaType &rhs);
+QTIKACORESHARED_EXPORT bool operator<(const MediaType &lhs, const MediaType &rhs);
 
-uint qHash(const MediaType &lhs, uint seed);
+QTIKACORESHARED_EXPORT uint qHash(const MediaType &lhs, uint seed);
 
 
 }       // namespace mime

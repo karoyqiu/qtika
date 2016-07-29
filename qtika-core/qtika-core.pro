@@ -23,13 +23,18 @@ DEFINES += QTIKACORE_LIBRARY
 
 SOURCES += \
     mime/mediatype.cpp \
-    metadata/creativecommons.cpp
+    metadata/creativecommons.cpp \
+    metadata/property.cpp \
+    metadata/propertytypeexception.cpp
 
 HEADERS += \
     qtika-core-global.h \
     mime/mediatype.h \
     stable.h \
-    metadata/creativecommons.h
+    metadata/creativecommons.h \
+    metadata/property.h \
+    metadata/propertytypeexception.h \
+    metadata/propertydata.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
