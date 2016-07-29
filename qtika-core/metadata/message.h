@@ -29,10 +29,12 @@ namespace metadata {
 /**
  * A collection of Message related property names.
  */
-class QTIKACORESHARED_EXPORT Message abstract
+class QTIKACORESHARED_EXPORT Message
 {
-public:
+protected:
     Message();
+
+public:
     virtual ~Message() Q_DECL_EQ_DEFAULT;
 
 public:

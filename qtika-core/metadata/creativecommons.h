@@ -31,10 +31,12 @@ namespace metadata {
  *
  * @see <a href="http://www.creativecommons.org/">creativecommons.org</a>
  */
-class QTIKACORESHARED_EXPORT CreativeCommons abstract
+class QTIKACORESHARED_EXPORT CreativeCommons
 {
-public:
+protected:
     CreativeCommons();
+
+public:
     virtual ~CreativeCommons() Q_DECL_EQ_DEFAULT;
 
 public:

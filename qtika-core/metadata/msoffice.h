@@ -32,10 +32,12 @@ namespace metadata {
  * This is being replaced with cleaner, better defined properties in
  *  {@link Office}.
  */
-class QTIKACORESHARED_EXPORT MSOffice abstract
+class QTIKACORESHARED_EXPORT MSOffice
 {
-public:
+protected:
     MSOffice();
+
+public:
     virtual ~MSOffice() Q_DECL_EQ_DEFAULT;
 
 public:

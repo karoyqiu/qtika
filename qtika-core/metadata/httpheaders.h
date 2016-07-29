@@ -31,10 +31,12 @@ namespace metadata {
  * @see <a href="http://rfc-ref.org/RFC-TEXTS/2616/">Hypertext Transfer Protocol --
  *      HTTP/1.1 (RFC 2616)</a>
  */
-class QTIKACORESHARED_EXPORT HttpHeaders abstract
+class QTIKACORESHARED_EXPORT HttpHeaders
 {
-public:
+protected:
     HttpHeaders();
+
+public:
     virtual ~HttpHeaders() Q_DECL_EQ_DEFAULT;
 
 public:

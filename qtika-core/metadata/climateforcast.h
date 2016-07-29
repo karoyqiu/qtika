@@ -30,10 +30,12 @@ namespace metadata {
  * Met keys from NCAR CCSM files in the <a
  * href="http://cf-pcmdi.llnl.gov/">Climate Forecast Convention</a>.
  */
-class QTIKACORESHARED_EXPORT ClimateForcast abstract
+class QTIKACORESHARED_EXPORT ClimateForcast
 {
-public:
+protected:
     ClimateForcast();
+
+public:
     virtual ~ClimateForcast() Q_DECL_EQ_DEFAULT;
 
 public:

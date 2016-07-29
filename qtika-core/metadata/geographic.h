@@ -34,10 +34,12 @@ namespace metadata {
  * @see <a href="http://www.w3.org/2003/01/geo/"
  *        >W3C Basic Geo Vocabulary</a>
  */
-class QTIKACORESHARED_EXPORT Geographic abstract
+class QTIKACORESHARED_EXPORT Geographic
 {
-public:
+protected:
     Geographic();
+
+public:
     virtual ~Geographic() Q_DECL_EQ_DEFAULT;
 
 public:
