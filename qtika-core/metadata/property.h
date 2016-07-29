@@ -26,8 +26,8 @@ namespace qtika {
 
 namespace metadata {
 
+namespace p { class PropertyData; }
 
-class PropertyData;
 
 /**
  * XMP property definition. Each instance of this class defines a single
@@ -178,7 +178,7 @@ public:
                               const QList<Property> &secondaryExtractProperties);
 
 private:
-    QSharedDataPointer<PropertyData> data;
+    QSharedDataPointer<p::PropertyData> data;
 };
 
 QTIKACORESHARED_EXPORT bool operator==(const Property &lhs, const Property &rhs);
@@ -193,3 +193,8 @@ QString toString(Property::ValueType type);
 }       // namespace metadata
 
 }       // namespace qtika
+
+
+// TODO: FIX THE COMPILE ERROR!
+// I don't know why it failed to compile...
+#include "private/propertydata.h"

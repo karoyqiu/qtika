@@ -14,8 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
-#include "creativecommons.h"
+#pragma once
+
+#include "qtika-core-global.h"
+
+#include <QString>
 
 
 namespace qtika {
@@ -23,12 +26,22 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+/**
+ * A collection of Message related property names.
+ */
+class QTIKACORESHARED_EXPORT Message abstract
 {
-}
+public:
+    Message();
+    virtual ~Message() Q_DECL_EQ_DEFAULT;
+
+public:
+    const QString MESSAGE_RECIPIENT_ADDRESS;
+    const QString MESSAGE_FROM;
+    const QString MESSAGE_TO;
+    const QString MESSAGE_CC;
+    const QString MESSAGE_BCC;
+};
 
 
 }       // namespace metadata

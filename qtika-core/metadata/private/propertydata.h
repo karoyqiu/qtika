@@ -14,22 +14,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
-#include "creativecommons.h"
+#pragma once
+
+#include <QMutex>
 
 
 namespace qtika {
 
 namespace metadata {
 
+namespace p {
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+
+class PropertyData : public QSharedData
 {
-}
+public:
+    PropertyData();
 
+    static QHash<QString, Property> properties;
+    static QMutex mutex;
+
+    QString name;
+
+    bool internal;
+
+    Property::PropertyType propertyType;
+
+    Property::ValueType valueType;
+
+    Property primaryProperty;
+
+    QList<Property> secondaryExtractProperties;
+
+    /**
+     * The available choices for the open and closed choice value types.
+     */
+    QSet<QString> choices;
+};
+
+}       // namespace p
 
 }       // namespace metadata
 

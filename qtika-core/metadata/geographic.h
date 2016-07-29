@@ -14,8 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
-#include "creativecommons.h"
+#pragma once
+
+#include "qtika-core-global.h"
+#include "property.h"
 
 
 namespace qtika {
@@ -23,12 +25,37 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+/**
+ * Geographic schema. This is a collection of
+ * {@link Property property definition} constants for geographic
+ * information, as defined in the W3C Geo Vocabularies.
+ *
+ * @since Apache Tika 0.8
+ * @see <a href="http://www.w3.org/2003/01/geo/"
+ *        >W3C Basic Geo Vocabulary</a>
+ */
+class QTIKACORESHARED_EXPORT Geographic abstract
 {
-}
+public:
+    Geographic();
+    virtual ~Geographic() Q_DECL_EQ_DEFAULT;
+
+public:
+    /**
+     * The WGS84 Latitude of the Point
+     */
+    const Property LATITUDE;
+
+    /**
+     * The WGS84 Longitude of the Point
+     */
+    const Property LONGITUDE;
+
+    /**
+     * The WGS84 Altitude of the Point
+     */
+    const Property ALTITUDE;
+};
 
 
 }       // namespace metadata

@@ -19,7 +19,7 @@
 
 #include <QCoreApplication>
 
-#include "propertydata.h"
+#include "private/propertydata.h"
 
 
 namespace qtika {

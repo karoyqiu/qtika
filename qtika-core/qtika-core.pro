@@ -25,7 +25,13 @@ SOURCES += \
     mime/mediatype.cpp \
     metadata/creativecommons.cpp \
     metadata/property.cpp \
-    metadata/propertytypeexception.cpp
+    metadata/propertytypeexception.cpp \
+    metadata/geographic.cpp \
+    metadata/httpheaders.cpp \
+    metadata/message.cpp \
+    metadata/msoffice.cpp \
+    metadata/climateforcast.cpp \
+    metadata/tiff.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -34,7 +40,13 @@ HEADERS += \
     metadata/creativecommons.h \
     metadata/property.h \
     metadata/propertytypeexception.h \
-    metadata/propertydata.h
+    metadata/private/propertydata.h \
+    metadata/geographic.h \
+    metadata/httpheaders.h \
+    metadata/message.h \
+    metadata/msoffice.h \
+    metadata/climateforcast.h \
+    metadata/tiff.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 

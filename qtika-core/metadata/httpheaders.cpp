@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 #include "stable.h"
-#include "creativecommons.h"
+#include "httpheaders.h"
+#include "private/propertydata.h"
 
 
 namespace qtika {
@@ -23,10 +24,16 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+HttpHeaders::HttpHeaders()
+    : CONTENT_ENCODING("Content-Encoding")
+    , CONTENT_LANGUAGE("Content-Language")
+    , CONTENT_LENGTH("Content-Length")
+    , CONTENT_LOCATION("Content-Location")
+    , CONTENT_DISPOSITION("Content-Disposition")
+    , CONTENT_MD5("Content-MD5")
+    , CONTENT_TYPE("Content-Type")
+    , LAST_MODIFIED(Property::internalDate(QS("Last-Modified")))
+    , LOCATION("Location")
 {
 }
 

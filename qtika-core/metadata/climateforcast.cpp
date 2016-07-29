@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 #include "stable.h"
-#include "creativecommons.h"
+#include "climateforcast.h"
 
 
 namespace qtika {
@@ -23,10 +23,22 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+ClimateForcast::ClimateForcast()
+    : PROGRAM_ID("prg_ID")
+    , COMMAND_LINE("cmd_ln")
+    , HISTORY("history")
+    , TABLE_ID("table_id")
+    , INSTITUTION("institution")
+    , SOURCE("source")
+    , CONTACT("contact")
+    , PROJECT_ID("project_id")
+    , CONVENTIONS("Conventions")
+    , REFERENCES("references")
+    , ACKNOWLEDGEMENT("acknowledgement")
+    , REALIZATION("realization")
+    , EXPERIMENT_ID("experiment_id")
+    , COMMENT("comment")
+    , MODEL_NAME_ENGLISH("model_name_english")
 {
 }
 

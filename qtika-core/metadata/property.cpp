@@ -24,7 +24,7 @@
 #include <QMutex>
 #include <QSet>
 
-#include "propertydata.h"
+#include "private/propertydata.h"
 #include "propertytypeexception.h"
 
 
@@ -49,6 +49,7 @@ static Property throwException(Args&& ...args)
 
 }
 
+namespace p {
 
 QHash<QString, Property> PropertyData::properties;
 QMutex PropertyData::mutex;
@@ -60,9 +61,11 @@ PropertyData::PropertyData()
 {
 }
 
+}
+
 
 Property::Property()
-    : data(new PropertyData)
+    : data(new p::PropertyData)
 {
 }
 
@@ -80,8 +83,8 @@ Property::Property(const QString &name, bool internal, PropertyType propertyType
     if (primaryProperty.isNull())
     {
         data->primaryProperty = *this;
-        QMutexLocker locker(&PropertyData::mutex);
-        PropertyData::properties.insert(name, *this);
+        QMutexLocker locker(&p::PropertyData::mutex);
+        p::PropertyData::properties.insert(name, *this);
     }
     else
     {
@@ -190,13 +193,13 @@ QList<Property> Property::secondaryExtractProperties() const
 
 Property::PropertyType Property::propertyType(const QString &key)
 {
-    return PropertyData::properties.value(key).propertyType();
+    return p::PropertyData::properties.value(key).propertyType();
 }
 
 
 Property Property::get(const QString &key)
 {
-    return PropertyData::properties.value(key);
+    return p::PropertyData::properties.value(key);
 }
 
 
@@ -205,9 +208,9 @@ QSet<Property> Property::properties(const QString &prefix)
     QSet<Property> set;
     QString p = prefix + ":";
 
-    QMutexLocker locker(&PropertyData::mutex);
+    QMutexLocker locker(&p::PropertyData::mutex);
 
-    for (auto iter = PropertyData::properties.begin(); iter != PropertyData::properties.end(); ++iter)
+    for (auto iter = p::PropertyData::properties.begin(); iter != p::PropertyData::properties.end(); ++iter)
     {
         if (iter.key().startsWith(p))
         {

@@ -34,11 +34,13 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT CreativeCommons abstract
 {
 public:
-    static const QString LICENSE_URL;
+    CreativeCommons();
+    virtual ~CreativeCommons() Q_DECL_EQ_DEFAULT;
 
-    static const QString LICENSE_LOCATION;
-
-    static const QString WORK_TYPE;
+public:
+    const QString LICENSE_URL;
+    const QString LICENSE_LOCATION;
+    const QString WORK_TYPE;
 };
 
 

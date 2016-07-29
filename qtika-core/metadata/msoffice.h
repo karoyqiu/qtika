@@ -14,8 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
-#include "creativecommons.h"
+#pragma once
+
+#include "qtika-core-global.h"
+
+#include <QString>
 
 
 namespace qtika {
@@ -23,12 +26,29 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+/**
+ * A collection of Microsoft Office and Open Document property names.
+ *
+ * This is being replaced with cleaner, better defined properties in
+ *  {@link Office}.
+ */
+class QTIKACORESHARED_EXPORT MSOffice abstract
 {
-}
+public:
+    MSOffice();
+    virtual ~MSOffice() Q_DECL_EQ_DEFAULT;
+
+public:
+    /** How long has been spent editing the document? */
+    const QString EDIT_TIME;
+
+    /**
+     * For user defined metadata entries in the document,
+     *  what prefix should be attached to the key names.
+     * eg <meta:user-defined meta:name="Info1">Text1</meta:user-defined> becomes custom:Info1=Text1
+     */
+    const QString USER_DEFINED_METADATA_NAME_PREFIX;
+};
 
 
 }       // namespace metadata

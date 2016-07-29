@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
-
-#include <QMutex>
+#include "stable.h"
+#include "geographic.h"
+#include "private/propertydata.h"
 
 
 namespace qtika {
@@ -24,31 +24,12 @@ namespace qtika {
 namespace metadata {
 
 
-class PropertyData : public QSharedData
+Geographic::Geographic()
+    : LATITUDE(Property::internalReal(QS("geo:lat")))
+    , LONGITUDE(Property::internalReal(QS("geo:long")))
+    , ALTITUDE(Property::internalReal(QS("geo:alt")))
 {
-public:
-    PropertyData();
-
-    static QHash<QString, Property> properties;
-    static QMutex mutex;
-
-    QString name;
-
-    bool internal;
-
-    Property::PropertyType propertyType;
-
-    Property::ValueType valueType;
-
-    Property primaryProperty;
-
-    QList<Property> secondaryExtractProperties;
-
-    /**
-     * The available choices for the open and closed choice value types.
-     */
-    QSet<QString> choices;
-};
+}
 
 
 }       // namespace metadata

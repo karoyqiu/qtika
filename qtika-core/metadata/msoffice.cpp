@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 #include "stable.h"
-#include "creativecommons.h"
+#include "msoffice.h"
 
 
 namespace qtika {
@@ -23,10 +23,9 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+MSOffice::MSOffice()
+    : EDIT_TIME("Edit-Time")
+    , USER_DEFINED_METADATA_NAME_PREFIX("custom:")
 {
 }
 

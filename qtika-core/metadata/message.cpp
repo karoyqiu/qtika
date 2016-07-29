@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 #include "stable.h"
-#include "creativecommons.h"
+#include "message.h"
 
 
 namespace qtika {
@@ -23,10 +23,12 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+Message::Message()
+    : MESSAGE_RECIPIENT_ADDRESS("Message-Recipient-Address")
+    , MESSAGE_FROM("Message-From")
+    , MESSAGE_TO("Message-To")
+    , MESSAGE_CC("Message-Cc")
+    , MESSAGE_BCC("Message-Bcc")
 {
 }
 

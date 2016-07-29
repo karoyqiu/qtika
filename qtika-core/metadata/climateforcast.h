@@ -14,8 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
-#include "creativecommons.h"
+#pragma once
+
+#include "qtika-core-global.h"
+
+#include <QString>
 
 
 namespace qtika {
@@ -23,12 +26,33 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+/**
+ * Met keys from NCAR CCSM files in the <a
+ * href="http://cf-pcmdi.llnl.gov/">Climate Forecast Convention</a>.
+ */
+class QTIKACORESHARED_EXPORT ClimateForcast abstract
 {
-}
+public:
+    ClimateForcast();
+    virtual ~ClimateForcast() Q_DECL_EQ_DEFAULT;
+
+public:
+    const QString PROGRAM_ID;
+    const QString COMMAND_LINE;
+    const QString HISTORY;
+    const QString TABLE_ID;
+    const QString INSTITUTION;
+    const QString SOURCE;
+    const QString CONTACT;
+    const QString PROJECT_ID;
+    const QString CONVENTIONS;
+    const QString REFERENCES;
+    const QString ACKNOWLEDGEMENT;
+    const QString REALIZATION;
+    const QString EXPERIMENT_ID;
+    const QString COMMENT;
+    const QString MODEL_NAME_ENGLISH;
+};
 
 
 }       // namespace metadata

@@ -14,8 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
-#include "creativecommons.h"
+#pragma once
+
+#include "qtika-core-global.h"
+#include "property.h"
 
 
 namespace qtika {
@@ -23,12 +25,29 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+/**
+ * A collection of HTTP header names.
+ *
+ * @see <a href="http://rfc-ref.org/RFC-TEXTS/2616/">Hypertext Transfer Protocol --
+ *      HTTP/1.1 (RFC 2616)</a>
+ */
+class QTIKACORESHARED_EXPORT HttpHeaders abstract
 {
-}
+public:
+    HttpHeaders();
+    virtual ~HttpHeaders() Q_DECL_EQ_DEFAULT;
+
+public:
+    const QString CONTENT_ENCODING;
+    const QString CONTENT_LANGUAGE;
+    const QString CONTENT_LENGTH;
+    const QString CONTENT_LOCATION;
+    const QString CONTENT_DISPOSITION;
+    const QString CONTENT_MD5;
+    const QString CONTENT_TYPE;
+    const Property LAST_MODIFIED;
+    const QString LOCATION;
+};
 
 
 }       // namespace metadata
