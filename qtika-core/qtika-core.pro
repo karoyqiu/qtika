@@ -31,7 +31,9 @@ SOURCES += \
     metadata/message.cpp \
     metadata/msoffice.cpp \
     metadata/climateforcast.cpp \
-    metadata/tiff.cpp
+    metadata/tiff.cpp \
+    metadata/tikametadatakeys.cpp \
+    metadata/tikamimekeys.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -46,7 +48,9 @@ HEADERS += \
     metadata/message.h \
     metadata/msoffice.h \
     metadata/climateforcast.h \
-    metadata/tiff.h
+    metadata/tiff.h \
+    metadata/tikametadatakeys.h \
+    metadata/tikamimekeys.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
