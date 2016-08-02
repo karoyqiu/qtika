@@ -20,6 +20,7 @@ TEMPLATE = lib
 CONFIG += warn_on c++11
 
 DEFINES += QTIKACORE_LIBRARY
+VERSION = 1.13
 
 SOURCES += \
     mime/mediatype.cpp \
@@ -33,7 +34,8 @@ SOURCES += \
     metadata/climateforcast.cpp \
     metadata/tiff.cpp \
     metadata/tikametadatakeys.cpp \
-    metadata/tikamimekeys.cpp
+    metadata/tikamimekeys.cpp \
+    metadata/metadata.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -50,7 +52,8 @@ HEADERS += \
     metadata/climateforcast.h \
     metadata/tiff.h \
     metadata/tikametadatakeys.h \
-    metadata/tikamimekeys.h
+    metadata/tikamimekeys.h \
+    metadata/metadata.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
