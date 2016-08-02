@@ -39,7 +39,8 @@ SOURCES += \
     metadata/metadata.cpp \
     metadata/dateformat.cpp \
     utils/dateutils.cpp \
-    metadata/dublincore.cpp
+    metadata/dublincore.cpp \
+    detect/namedetector.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -59,7 +60,9 @@ HEADERS += \
     metadata/metadata.h \
     metadata/dateformat.h \
     utils/dateutils.h \
-    metadata/dublincore.h
+    metadata/dublincore.h \
+    detect/detector.h \
+    detect/namedetector.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
