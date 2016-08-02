@@ -45,7 +45,7 @@ class NameDetectorData;
  *
  * @since Apache Tika 0.3
  */
-class NameDetector : public Detector
+class QTIKACORESHARED_EXPORT NameDetector : public Detector
 {
 public:
     typedef QHash<QRegularExpression, MediaType> PatternMap;

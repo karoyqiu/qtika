@@ -14,33 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
+#pragma once
 
-#include <QtTest>
-#include <QCoreApplication>
-
-#include "mediatypetest.h"
-#include "metadatatest.h"
-#include "namedetectortest.h"
+#include <QObject>
+#include <detect/detector.h>
 
 
-int main(int argc, char *argv[])
+class NameDetectorTest : public QObject
 {
-    QCoreApplication app(argc, argv);
-    app.setAttribute(Qt::AA_Use96Dpi, true);
+    Q_OBJECT
 
-    QTEST_SET_MAIN_SOURCE_PATH
+private slots:
+    void initTestCase();
+    void cleanupTestCase();
+    void testDetect();
 
-    int result = 0;
-
-    MediaTypeTest mediaTypeTest;
-    result += QTest::qExec(&mediaTypeTest);
-
-    MetadataTest metadataTest;
-    result += QTest::qExec(&metadataTest);
-
-    NameDetectorTest nameDetectorTest;
-    result += QTest::qExec(&nameDetectorTest);
-
-    return result;
-}
+private:
+    qtika::detect::Detector *detector_;
+};
