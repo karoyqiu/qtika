@@ -16,8 +16,8 @@
  */
 #pragma once
 
-//#include <QtCore>
+#include <QtCore>
 #include <QtDebug>
-#include <QStringBuilder>
+#include <QtTest>
 
 #define QS(x)   QStringLiteral(x)

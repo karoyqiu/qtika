@@ -14,28 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
-#include "httpheaders.h"
+#pragma once
+
+#include "qtika-core-global.h"
+
+#include <QDateTime>
 
 
 namespace qtika {
 
-namespace metadata {
+namespace utils {
+
+namespace DateUtils {
 
 
-HttpHeaders::HttpHeaders()
-    : CONTENT_ENCODING("Content-Encoding")
-    , CONTENT_LANGUAGE("Content-Language")
-    , CONTENT_LENGTH("Content-Length")
-    , CONTENT_LOCATION("Content-Location")
-    , CONTENT_DISPOSITION("Content-Disposition")
-    , CONTENT_MD5("Content-MD5")
-    , CONTENT_TYPE("Content-Type")
-    , LAST_MODIFIED(Property::internalDate(QS("Last-Modified")))
-    , LOCATION("Location")
-{
-}
+/**
+ * Returns a ISO 8601 representation of the given date. This method
+ * is thread safe and non-blocking.
+ *
+ * @see <a href="https://issues.apache.org/jira/browse/TIKA-495">TIKA-495</a>
+ * @param date given date
+ * @return ISO 8601 date string, including timezone details
+ */
+QTIKACORESHARED_EXPORT QString formatDate(const QDateTime &date);
 
+
+/**
+ * Returns a ISO 8601 representation of the given date, which is
+ *  in an unknown timezone. This method is thread safe and non-blocking.
+ *
+ * @see <a href="https://issues.apache.org/jira/browse/TIKA-495">TIKA-495</a>
+ * @param date given date
+ * @return ISO 8601 date string, without timezone details
+ */
+QTIKACORESHARED_EXPORT QString formatDateUnknownTimezone(const QDateTime &date);
+
+
+}       // namespace DateUtils
 
 }       // namespace metadata
 

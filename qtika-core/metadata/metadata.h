@@ -60,7 +60,7 @@ public:
     Metadata();
     Metadata(const Metadata &);
     Metadata &operator=(const Metadata &);
-    virtual ~Metadata() Q_DECL_EQ_DEFAULT;
+    virtual ~Metadata();
 
     /**
      * Returns true if named value is multivalued.
@@ -237,6 +237,12 @@ public:
 
     QString toString() const;
 
+public:
+    /**
+     * The common delimiter used between the namespace abbreviation and the property name
+     */
+    static const QString NAMESPACE_PREFIX_DELIMITER;
+
 private:
     friend QTIKACORESHARED_EXPORT bool operator==(const Metadata &lhs, const Metadata &rhs);
 
@@ -245,6 +251,7 @@ private:
 
 
 QTIKACORESHARED_EXPORT bool operator==(const Metadata &lhs, const Metadata &rhs);
+QTIKACORESHARED_EXPORT bool operator!=(const Metadata &lhs, const Metadata &rhs);
 
 
 }       // namespace metadata

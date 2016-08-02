@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "stable.h"
 #include "mediatypetest.h"
 
 #include <QTest>
 #include <mime/mediatype.h>
-
-#define QS(x)   QStringLiteral(x)
 
 using qtika::mime::MediaType;
 

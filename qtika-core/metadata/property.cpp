@@ -23,8 +23,8 @@
 #include <QHash>
 #include <QMutex>
 #include <QSet>
+#include <QSharedPointer>
 
-#include "private/propertydata.h"
 #include "propertytypeexception.h"
 
 
@@ -49,7 +49,33 @@ static Property throwException(Args&& ...args)
 
 }
 
-namespace p {
+
+class PropertyData : public QSharedData
+{
+public:
+    PropertyData();
+
+    static QHash<QString, Property> properties;
+    static QMutex mutex;
+
+    QString name;
+
+    bool internal;
+
+    Property::PropertyType propertyType;
+
+    Property::ValueType valueType;
+
+    QSharedPointer<Property> primaryProperty;
+
+    QList<Property> secondaryExtractProperties;
+
+    /**
+     * The available choices for the open and closed choice value types.
+     */
+    QSet<QString> choices;
+};
+
 
 QHash<QString, Property> PropertyData::properties;
 QMutex PropertyData::mutex;
@@ -61,11 +87,9 @@ PropertyData::PropertyData()
 {
 }
 
-}
-
 
 Property::Property()
-    : data(new p::PropertyData)
+    : data(new PropertyData)
 {
 }
 
@@ -82,13 +106,13 @@ Property::Property(const QString &name, bool internal, PropertyType propertyType
 
     if (primaryProperty.isNull())
     {
-        data->primaryProperty = *this;
-        QMutexLocker locker(&p::PropertyData::mutex);
-        p::PropertyData::properties.insert(name, *this);
+        data->primaryProperty = QSharedPointer<Property>::create(*this);
+        QMutexLocker locker(&PropertyData::mutex);
+        PropertyData::properties.insert(name, *this);
     }
     else
     {
-        data->primaryProperty = primaryProperty;
+        data->primaryProperty = QSharedPointer<Property>::create(primaryProperty);
         data->secondaryExtractProperties = secondaryExtractProperties;
     }
 }
@@ -118,9 +142,14 @@ Property &Property::operator=(const Property &rhs)
 }
 
 
+Property::~Property()
+{
+}
+
+
 bool Property::isNull() const
 {
-    return !data->name.isEmpty();
+    return data->name.isEmpty();
 }
 
 
@@ -153,7 +182,7 @@ bool Property::isMultiValuePermitted() const
 
     case PropertyType::COMPOSITE:
         // Base it on the primary property's behaviour
-        return data->primaryProperty.isMultiValuePermitted();
+        return data->primaryProperty->isMultiValuePermitted();
 
     default:
         return false;
@@ -181,7 +210,7 @@ QSet<QString> Property::choices() const
 
 Property Property::primaryProperty() const
 {
-    return data->primaryProperty;
+    return *data->primaryProperty;
 }
 
 
@@ -193,13 +222,13 @@ QList<Property> Property::secondaryExtractProperties() const
 
 Property::PropertyType Property::propertyType(const QString &key)
 {
-    return p::PropertyData::properties.value(key).propertyType();
+    return PropertyData::properties.value(key).propertyType();
 }
 
 
 Property Property::get(const QString &key)
 {
-    return p::PropertyData::properties.value(key);
+    return PropertyData::properties.value(key);
 }
 
 
@@ -208,9 +237,9 @@ QSet<Property> Property::properties(const QString &prefix)
     QSet<Property> set;
     QString p = prefix + ":";
 
-    QMutexLocker locker(&p::PropertyData::mutex);
+    QMutexLocker locker(&PropertyData::mutex);
 
-    for (auto iter = p::PropertyData::properties.begin(); iter != p::PropertyData::properties.end(); ++iter)
+    for (auto iter = PropertyData::properties.begin(); iter != PropertyData::properties.end(); ++iter)
     {
         if (iter.key().startsWith(p))
         {

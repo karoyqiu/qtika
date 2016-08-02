@@ -16,8 +16,27 @@
  */
 #pragma once
 
-//#include <QtCore>
-#include <QtDebug>
-#include <QStringBuilder>
+#include <QDateTime>
 
-#define QS(x)   QStringLiteral(x)
+
+namespace qtika {
+
+namespace metadata {
+
+
+class DateFormat
+{
+public:
+    DateFormat(const QString &format, Qt::TimeSpec spec = Qt::UTC);
+
+    QDateTime fromString(const QString &string) const;
+
+private:
+    QString format_;
+    Qt::TimeSpec spec_;
+};
+
+
+}       // namespace metadata
+
+}       // namespace qtika

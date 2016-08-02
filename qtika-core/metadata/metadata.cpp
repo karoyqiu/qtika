@@ -21,6 +21,7 @@
 #include <QSharedData>
 #include <QStringBuilder>
 
+#include "dateformat.h"
 #include "propertytypeexception.h"
 
 
@@ -44,10 +45,17 @@ public:
 
 public:
     /**
-     * The common delimiter used between the namespace abbreviation and the property name
+     * A map of all metadata attributes.
      */
-    static const QString NAMESPACE_PREFIX_DELIMITER;
+    QHash<QString, QStringList> metadata;
+};
 
+
+const QString Metadata::NAMESPACE_PREFIX_DELIMITER(":");
+
+
+QDateTime MetadataData::parseDate(const QString &date)
+{
     /**
      * Some parsers will have the date as a ISO-8601 string
      *  already, and will set that into the Metadata object.
@@ -56,38 +64,25 @@ public:
      *  variants that we try when processing a date based
      *  property.
      */
-    static const QStringList iso8601InputFormats;
-
-    /**
-     * A map of all metadata attributes.
-     */
-    QHash<QString, QStringList> metadata;
-};
-
-
-const QString MetadataData::NAMESPACE_PREFIX_DELIMITER(":");
-const QStringList MetadataData::iso8601InputFormats = {
+    static const QList<DateFormat> formats = {
         // yyyy-mm-ddThh...
-        QS("yyyy-MM-dd'T'HH:mm:ss'Z'"),         // UTC/Zulu
-        QS("yyyy-MM-dd'T'HH:mm:sst"),           // With timezone
-        QS("yyyy-MM-dd'T'HH:mm:ss"),            // Without timezone
+        DateFormat(QS("yyyy-MM-dd'T'HH:mm:ss'Z'")),         // UTC/Zulu
+        DateFormat(QS("yyyy-MM-dd'T'HH:mm:ssZ")),           // With timezone
+        DateFormat(QS("yyyy-MM-dd'T'HH:mm:ss")),            // Without timezone
         // yyyy-mm-dd hh...
-        QS("yyyy-MM-dd' 'HH:mm:ss'Z'"),         // UTC/Zulu
-        QS("yyyy-MM-dd' 'HH:mm:sst"),           // With timezone
-        QS("yyyy-MM-dd' 'HH:mm:ss"),            // Without timezone
+        DateFormat(QS("yyyy-MM-dd' 'HH:mm:ss'Z'")),         // UTC/Zulu
+        DateFormat(QS("yyyy-MM-dd' 'HH:mm:ssZ")),           // With timezone
+        DateFormat(QS("yyyy-MM-dd' 'HH:mm:ss")),            // Without timezone
         // Date without time, set to Midday UTC
-        QS("yyyy-MM-dd"),                       // Normal date format
-        QS("yyyy:MM:dd")                        // Image (IPTC/EXIF) format
-};
+        DateFormat(QS("yyyy-MM-dd"), Qt::OffsetFromUTC),    // Normal date format
+        DateFormat(QS("yyyy:MM:dd"), Qt::OffsetFromUTC)     // Image (IPTC/EXIF) format
+    };
 
-
-QDateTime MetadataData::parseDate(const QString &date)
-{
     QDateTime dt;
 
-    for (const QString &format : iso8601InputFormats)
+    for (const DateFormat &format : formats)
     {
-        dt = QDateTime::fromString(date, format);
+        dt = format.fromString(date);
 
         if (dt.isValid())
         {
@@ -119,6 +114,11 @@ Metadata &Metadata::operator=(const Metadata &rhs)
     }
 
     return *this;
+}
+
+
+Metadata::~Metadata()
+{
 }
 
 
@@ -398,7 +398,13 @@ QString Metadata::toString() const
 bool operator==(const Metadata &lhs, const Metadata &rhs)
 {
     return (lhs.data == rhs.data)
-           || (lhs.data->metadata == rhs.data->metadata);
+            || (lhs.data->metadata == rhs.data->metadata);
+}
+
+
+bool operator!=(const Metadata &lhs, const Metadata &rhs)
+{
+    return !(lhs == rhs);
 }
 
 

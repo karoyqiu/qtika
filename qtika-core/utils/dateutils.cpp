@@ -14,45 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
-
-#include <QMutex>
+#include "stable.h"
+#include "dateutils.h"
 
 
 namespace qtika {
 
-namespace metadata {
+namespace utils {
 
-namespace p {
+namespace DateUtils {
 
 
-class PropertyData : public QSharedData
+QString formatDate(const QDateTime &date)
 {
-public:
-    PropertyData();
+    return date.toUTC().toString(Qt::ISODate);
+}
 
-    static QHash<QString, Property> properties;
-    static QMutex mutex;
 
-    QString name;
+QString formatDateUnknownTimezone(const QDateTime &date)
+{
+    return date.toUTC().toString(QS("yyyy-MM-ddTHH:mm:ss"));
+}
 
-    bool internal;
 
-    Property::PropertyType propertyType;
-
-    Property::ValueType valueType;
-
-    Property primaryProperty;
-
-    QList<Property> secondaryExtractProperties;
-
-    /**
-     * The available choices for the open and closed choice value types.
-     */
-    QSet<QString> choices;
-};
-
-}       // namespace p
+}       // namespace DateUtils
 
 }       // namespace metadata
 

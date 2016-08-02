@@ -16,7 +16,6 @@
  */
 #include "stable.h"
 #include "geographic.h"
-#include "private/propertydata.h"
 
 
 namespace qtika {

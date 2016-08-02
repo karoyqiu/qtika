@@ -14,10 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "stable.h"
+
 #include <QtTest>
 #include <QCoreApplication>
 
 #include "mediatypetest.h"
+#include "metadatatest.h"
 
 
 int main(int argc, char *argv[])
@@ -27,7 +30,13 @@ int main(int argc, char *argv[])
 
     QTEST_SET_MAIN_SOURCE_PATH
 
-    MediaTypeTest mediaTypeTest;
+    int result = 0;
 
-    return QTest::qExec(&mediaTypeTest, argc, argv);
+    MediaTypeTest mediaTypeTest;
+    result += QTest::qExec(&mediaTypeTest);
+
+    MetadataTest metadataTest;
+    result += QTest::qExec(&metadataTest);
+
+    return result;
 }

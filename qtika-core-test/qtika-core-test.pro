@@ -23,12 +23,15 @@ CONFIG += console testcase
 CONFIG -= app_bundle
 
 TEMPLATE = app
+PRECOMPILED_HEADER = stable.h
 
 SOURCES += main.cpp \
-    mediatypetest.cpp
+    mediatypetest.cpp \
+    metadatatest.cpp
 
 HEADERS += \
-    mediatypetest.h
+    mediatypetest.h \
+    metadatatest.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/release/ -lqtika-core
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/debug/ -lqtika-core

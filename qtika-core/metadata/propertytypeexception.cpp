@@ -19,8 +19,6 @@
 
 #include <QCoreApplication>
 
-#include "private/propertydata.h"
-
 
 namespace qtika {
 

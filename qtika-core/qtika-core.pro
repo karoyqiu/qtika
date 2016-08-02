@@ -18,6 +18,7 @@ QT       -= gui
 TARGET = qtika-core
 TEMPLATE = lib
 CONFIG += warn_on c++11
+CONFIG += skip_target_version_ext
 
 DEFINES += QTIKACORE_LIBRARY
 VERSION = 1.13
@@ -35,16 +36,18 @@ SOURCES += \
     metadata/tiff.cpp \
     metadata/tikametadatakeys.cpp \
     metadata/tikamimekeys.cpp \
-    metadata/metadata.cpp
+    metadata/metadata.cpp \
+    metadata/dateformat.cpp \
+    utils/dateutils.cpp \
+    metadata/dublincore.cpp
 
 HEADERS += \
     qtika-core-global.h \
-    mime/mediatype.h \
     stable.h \
+    mime/mediatype.h \
     metadata/creativecommons.h \
     metadata/property.h \
     metadata/propertytypeexception.h \
-    metadata/private/propertydata.h \
     metadata/geographic.h \
     metadata/httpheaders.h \
     metadata/message.h \
@@ -53,7 +56,10 @@ HEADERS += \
     metadata/tiff.h \
     metadata/tikametadatakeys.h \
     metadata/tikamimekeys.h \
-    metadata/metadata.h
+    metadata/metadata.h \
+    metadata/dateformat.h \
+    utils/dateutils.h \
+    metadata/dublincore.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
