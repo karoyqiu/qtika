@@ -200,13 +200,6 @@ QMap<K, V> MediaTypeData::merge(const QMap<K, V> &a, const QMap<K, V> &b)
 }
 
 
-const MediaType MediaType::OCTET_STREAM = MediaType::parse(QS("application/octet-stream"));
-const MediaType MediaType::TEXT_PLAIN = MediaType::parse(QS("text/plain"));
-const MediaType MediaType::TEXT_HTML = MediaType::parse(QS("text/html"));
-const MediaType MediaType::APPLICATION_XML = MediaType::parse(QS("application/xml"));
-const MediaType MediaType::APPLICATION_ZIP = MediaType::parse(QS("application/zip"));
-
-
 MediaType::MediaType()
     : data(new MediaTypeData)
 {
@@ -456,6 +449,41 @@ MediaType MediaType::text(const QString &type)
 MediaType MediaType::video(const QString &type)
 {
     return parse("video/" % type);
+}
+
+
+MediaType MediaType::OCTET_STREAM()
+{
+    static const MediaType type = MediaType::parse(QS("application/octet-stream"));
+    return type;
+}
+
+
+MediaType MediaType::TEXT_PLAIN()
+{
+    static const MediaType type = MediaType::parse(QS("text/plain"));
+    return type;
+}
+
+
+MediaType MediaType::TEXT_HTML()
+{
+    static const MediaType type = MediaType::parse(QS("text/html"));
+    return type;
+}
+
+
+MediaType MediaType::APPLICATION_XML()
+{
+    static const MediaType type = MediaType::parse(QS("application/xml"));
+    return type;
+}
+
+
+MediaType MediaType::APPLICATION_ZIP()
+{
+    static const MediaType type = MediaType::parse(QS("application/zip"));
+    return type;
 }
 
 

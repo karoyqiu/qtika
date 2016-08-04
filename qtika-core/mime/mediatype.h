@@ -117,11 +117,11 @@ public:
     static MediaType text(const QString &type);
     static MediaType video(const QString &type);
 
-    static const MediaType OCTET_STREAM;
-    static const MediaType TEXT_PLAIN;
-    static const MediaType TEXT_HTML;
-    static const MediaType APPLICATION_XML;
-    static const MediaType APPLICATION_ZIP;
+    static MediaType OCTET_STREAM();
+    static MediaType TEXT_PLAIN();
+    static MediaType TEXT_HTML();
+    static MediaType APPLICATION_XML();
+    static MediaType APPLICATION_ZIP();
 
 private:
     QSharedDataPointer<MediaTypeData> data;

@@ -33,27 +33,26 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT ClimateForcast
 {
 protected:
-    ClimateForcast();
+    ClimateForcast() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~ClimateForcast() Q_DECL_EQ_DEFAULT;
 
-public:
-    const QString PROGRAM_ID;
-    const QString COMMAND_LINE;
-    const QString HISTORY;
-    const QString TABLE_ID;
-    const QString INSTITUTION;
-    const QString SOURCE;
-    const QString CONTACT;
-    const QString PROJECT_ID;
-    const QString CONVENTIONS;
-    const QString REFERENCES;
-    const QString ACKNOWLEDGEMENT;
-    const QString REALIZATION;
-    const QString EXPERIMENT_ID;
-    const QString COMMENT;
-    const QString MODEL_NAME_ENGLISH;
+    static QString PROGRAM_ID();
+    static QString COMMAND_LINE();
+    static QString HISTORY();
+    static QString TABLE_ID();
+    static QString INSTITUTION();
+    static QString SOURCE();
+    static QString CONTACT();
+    static QString PROJECT_ID();
+    static QString CONVENTIONS();
+    static QString REFERENCES();
+    static QString ACKNOWLEDGEMENT();
+    static QString REALIZATION();
+    static QString EXPERIMENT_ID();
+    static QString COMMENT();
+    static QString MODEL_NAME_ENGLISH();
 };
 
 

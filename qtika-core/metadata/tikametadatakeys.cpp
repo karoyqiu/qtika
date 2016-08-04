@@ -23,13 +23,33 @@ namespace qtika {
 namespace metadata {
 
 
-TikaMetadataKeys::TikaMetadataKeys()
-    : RESOURCE_NAME_KEY("resourceName")
-    , PROTECTED("protected")
-    , EMBEDDED_RELATIONSHIP_ID("embeddedRelationshipId")
-    , EMBEDDED_STORAGE_CLASS_ID("embeddedStorageClassId")
-    , EMBEDDED_RESOURCE_TYPE("embeddedResourceType")
+QString TikaMetadataKeys::RESOURCE_NAME_KEY()
 {
+    return QS("resourceName");
+}
+
+
+QString TikaMetadataKeys::PROTECTED()
+{
+    return QS("protected");
+}
+
+
+QString TikaMetadataKeys::EMBEDDED_RELATIONSHIP_ID()
+{
+    return QS("embeddedRelationshipId");
+}
+
+
+QString TikaMetadataKeys::EMBEDDED_STORAGE_CLASS_ID()
+{
+    return QS("embeddedStorageClassId");
+}
+
+
+QString TikaMetadataKeys::EMBEDDED_RESOURCE_TYPE()
+{
+    return QS("embeddedResourceType");
 }
 
 

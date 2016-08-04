@@ -35,21 +35,20 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT MSOffice
 {
 protected:
-    MSOffice();
+    MSOffice() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~MSOffice() Q_DECL_EQ_DEFAULT;
 
-public:
     /** How long has been spent editing the document? */
-    const QString EDIT_TIME;
+    static QString EDIT_TIME();
 
     /**
      * For user defined metadata entries in the document,
      *  what prefix should be attached to the key names.
      * eg <meta:user-defined meta:name="Info1">Text1</meta:user-defined> becomes custom:Info1=Text1
      */
-    const QString USER_DEFINED_METADATA_NAME_PREFIX;
+    static QString USER_DEFINED_METADATA_NAME_PREFIX();
 };
 
 

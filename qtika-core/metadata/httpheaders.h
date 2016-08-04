@@ -34,21 +34,21 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT HttpHeaders
 {
 protected:
-    HttpHeaders();
+    HttpHeaders() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~HttpHeaders() Q_DECL_EQ_DEFAULT;
 
 public:
-    const QString CONTENT_ENCODING;
-    const QString CONTENT_LANGUAGE;
-    const QString CONTENT_LENGTH;
-    const QString CONTENT_LOCATION;
-    const QString CONTENT_DISPOSITION;
-    const QString CONTENT_MD5;
-    const QString CONTENT_TYPE;
-    const Property LAST_MODIFIED;
-    const QString LOCATION;
+    static QString CONTENT_ENCODING();
+    static QString CONTENT_LANGUAGE();
+    static QString CONTENT_LENGTH();
+    static QString CONTENT_LOCATION();
+    static QString CONTENT_DISPOSITION();
+    static QString CONTENT_MD5();
+    static QString CONTENT_TYPE();
+    static Property LAST_MODIFIED();
+    static QString LOCATION();
 };
 
 

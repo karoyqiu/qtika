@@ -33,16 +33,16 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT DublinCore
 {
 protected:
-    DublinCore();
+    DublinCore() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~DublinCore() Q_DECL_EQ_DEFAULT;
 
 public:
-    const QString NAMESPACE_URI_DC;
-    const QString NAMESPACE_URI_DC_TERMS;
-    const QString PREFIX_DC;
-    const QString PREFIX_DC_TERMS;
+    static QString NAMESPACE_URI_DC();
+    static QString NAMESPACE_URI_DC_TERMS();
+    static QString PREFIX_DC();
+    static QString PREFIX_DC_TERMS();
 
     /**
      * Typically, Format may include the media-type or dimensions of the
@@ -52,7 +52,7 @@ public:
      * to select a value from a controlled vocabulary (for example, the list
      * of Internet Media Types [MIME] defining computer media formats).
      */
-    const Property FORMAT;
+    static Property FORMAT();
 
     /**
      * Recommended best practice is to identify the resource by means of
@@ -62,12 +62,12 @@ public:
      * the Digital Object Identifier (DOI) and the International Standard
      * Book Number (ISBN).
      */
-    const Property IDENTIFIER;
+    static Property IDENTIFIER();
 
     /**
      * Date on which the resource was changed.
      */
-    const Property MODIFIED;
+    static Property MODIFIED();
 
     /**
      * An entity responsible for making contributions to the content of the
@@ -75,7 +75,7 @@ public:
      * or a service. Typically, the name of a Contributor should be used to
      * indicate the entity.
      */
-    const Property CONTRIBUTOR;
+    static Property CONTRIBUTOR();
 
     /**
      * The extent or scope of the content of the resource. Coverage will
@@ -87,19 +87,19 @@ public:
      * appropriate, named places or time periods be used in preference to
      * numeric identifiers such as sets of coordinates or date ranges.
      */
-    const Property COVERAGE;
+    static Property COVERAGE();
 
     /**
      * An entity primarily responsible for making the content of the resource.
      * Examples of a Creator include a person, an organisation, or a service.
      * Typically, the name of a Creator should be used to indicate the entity.
      */
-    const Property CREATOR;
+    static Property CREATOR();
 
     /**
      * Date of creation of the resource.
      */
-    const Property CREATED;
+    static Property CREATED();
 
     /**
      * A date associated with an event in the life cycle of the resource.
@@ -108,7 +108,7 @@ public:
      * defined in a profile of ISO 8601 [W3CDTF] and follows the YYYY-MM-DD
      * format.
      */
-    const Property DATE;
+    static Property DATE();
 
     /**
      * An account of the content of the resource. Description may include
@@ -116,7 +116,7 @@ public:
      * a graphical representation of content or a free-text account of
      * the content.
      */
-    const Property DESCRIPTION;
+    static Property DESCRIPTION();
 
     /**
      * A language of the intellectual content of the resource. Recommended
@@ -125,21 +125,21 @@ public:
      * tags with optional subtags. Examples include "en" or "eng" for English,
      * "akk" for Akkadian, and "en-GB" for English used in the United Kingdom.
      */
-    const Property LANGUAGE;
+    static Property LANGUAGE();
 
     /**
      * An entity responsible for making the resource available. Examples of
      * a Publisher include a person, an organisation, or a service. Typically,
      * the name of a Publisher should be used to indicate the entity.
      */
-    const Property PUBLISHER;
+    static Property PUBLISHER();
 
     /**
      * A reference to a related resource. Recommended best practice is to
      * reference the resource by means of a string or number conforming to
      * a formal identification system.
      */
-    const Property RELATION;
+    static Property RELATION();
 
     /**
      * Information about rights held in and over the resource. Typically,
@@ -150,7 +150,7 @@ public:
      * is absent, no assumptions can be made about the status of these and
      * other rights with respect to the resource.
      */
-    const Property RIGHTS;
+    static Property RIGHTS();
 
     /**
      * A reference to a resource from which the present resource is derived.
@@ -159,7 +159,7 @@ public:
      * means of a string or number conforming to a formal identification
      * system.
      */
-    const Property SOURCE;
+    static Property SOURCE();
 
     /**
      * The topic of the content of the resource. Typically, a Subject will
@@ -168,13 +168,13 @@ public:
      * select a value from a controlled vocabulary or formal classification
      * scheme.
      */
-    const Property SUBJECT;
+    static Property SUBJECT();
 
     /**
      * A name given to the resource. Typically, a Title will be a name by
      * which the resource is formally known.
      */
-    const Property TITLE;
+    static Property TITLE();
 
     /**
      * The nature or genre of the content of the resource. Type includes terms
@@ -184,7 +184,7 @@ public:
      * [DCMITYPE]). To describe the physical or digital manifestation of
      * the resource, use the Format element.
      */
-    const Property TYPE;
+    static Property TYPE();
 };
 
 

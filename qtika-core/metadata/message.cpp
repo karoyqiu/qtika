@@ -23,13 +23,33 @@ namespace qtika {
 namespace metadata {
 
 
-Message::Message()
-    : MESSAGE_RECIPIENT_ADDRESS("Message-Recipient-Address")
-    , MESSAGE_FROM("Message-From")
-    , MESSAGE_TO("Message-To")
-    , MESSAGE_CC("Message-Cc")
-    , MESSAGE_BCC("Message-Bcc")
+QString Message::MESSAGE_RECIPIENT_ADDRESS()
 {
+    return QS("Message-Recipient-Address");
+}
+
+
+QString Message::MESSAGE_FROM()
+{
+    return QS("Message-From");
+}
+
+
+QString Message::MESSAGE_TO()
+{
+    return QS("Message-To");
+}
+
+
+QString Message::MESSAGE_CC()
+{
+    return QS("Message-Cc");
+}
+
+
+QString Message::MESSAGE_BCC()
+{
+    return QS("Message-Bcc");
 }
 
 

@@ -23,10 +23,15 @@ namespace qtika {
 namespace metadata {
 
 
-MSOffice::MSOffice()
-    : EDIT_TIME("Edit-Time")
-    , USER_DEFINED_METADATA_NAME_PREFIX("custom:")
+QString MSOffice::EDIT_TIME()
 {
+    return QS("Edit-Time");
+}
+
+
+QString MSOffice::USER_DEFINED_METADATA_NAME_PREFIX()
+{
+    return QS("custom:");
 }
 
 

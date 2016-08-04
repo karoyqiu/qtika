@@ -23,23 +23,92 @@ namespace qtika {
 namespace metadata {
 
 
-ClimateForcast::ClimateForcast()
-    : PROGRAM_ID("prg_ID")
-    , COMMAND_LINE("cmd_ln")
-    , HISTORY("history")
-    , TABLE_ID("table_id")
-    , INSTITUTION("institution")
-    , SOURCE("source")
-    , CONTACT("contact")
-    , PROJECT_ID("project_id")
-    , CONVENTIONS("Conventions")
-    , REFERENCES("references")
-    , ACKNOWLEDGEMENT("acknowledgement")
-    , REALIZATION("realization")
-    , EXPERIMENT_ID("experiment_id")
-    , COMMENT("comment")
-    , MODEL_NAME_ENGLISH("model_name_english")
+QString ClimateForcast::PROGRAM_ID()
 {
+    return QS("prg_ID");
+}
+
+
+QString ClimateForcast::COMMAND_LINE()
+{
+    return QS("cmd_ln");
+}
+
+
+QString ClimateForcast::HISTORY()
+{
+    return QS("history");
+}
+
+
+QString ClimateForcast::TABLE_ID()
+{
+    return QS("table_id");
+}
+
+
+QString ClimateForcast::INSTITUTION()
+{
+    return QS("institution");
+}
+
+
+QString ClimateForcast::SOURCE()
+{
+    return QS("source");
+}
+
+
+QString ClimateForcast::CONTACT()
+{
+    return QS("contact");
+}
+
+
+QString ClimateForcast::PROJECT_ID()
+{
+    return QS("project_id");
+}
+
+
+QString ClimateForcast::CONVENTIONS()
+{
+    return QS("Conventions");
+}
+
+
+QString ClimateForcast::REFERENCES()
+{
+    return QS("references");
+}
+
+
+QString ClimateForcast::ACKNOWLEDGEMENT()
+{
+    return QS("acknowledgement");
+}
+
+
+QString ClimateForcast::REALIZATION()
+{
+    return QS("realization");
+}
+
+
+QString ClimateForcast::EXPERIMENT_ID()
+{
+    return QS("experiment_id");
+}
+
+QString ClimateForcast::COMMENT()
+{
+    return QS("comment");
+}
+
+
+QString ClimateForcast::MODEL_NAME_ENGLISH()
+{
+    return QS("model_name_english");
 }
 
 

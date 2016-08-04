@@ -71,7 +71,7 @@ Detector::MediaType NameDetector::detect(QIODevice *input, const Metadata &meta)
     Q_UNUSED(input)
 
     // Look for a resource name in the input metadata
-    QString name = meta.get(meta.RESOURCE_NAME_KEY);
+    QString name = meta.get(Metadata::RESOURCE_NAME_KEY());
 
     if (!name.isEmpty())
     {
@@ -131,7 +131,7 @@ Detector::MediaType NameDetector::detect(QIODevice *input, const Metadata &meta)
         }
     }
 
-    return MediaType::OCTET_STREAM;
+    return MediaType::OCTET_STREAM();
 }
 
 

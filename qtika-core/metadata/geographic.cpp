@@ -23,11 +23,24 @@ namespace qtika {
 namespace metadata {
 
 
-Geographic::Geographic()
-    : LATITUDE(Property::internalReal(QS("geo:lat")))
-    , LONGITUDE(Property::internalReal(QS("geo:long")))
-    , ALTITUDE(Property::internalReal(QS("geo:alt")))
+Property Geographic::LATITUDE()
 {
+    static const Property p = Property::internalReal(QS("geo:lat"));
+    return p;
+}
+
+
+Property Geographic::LONGITUDE()
+{
+    static const Property p = Property::internalReal(QS("geo:long"));
+    return p;
+}
+
+
+Property Geographic::ALTITUDE()
+{
+    static const Property p = Property::internalReal(QS("geo:alt"));
+    return p;
 }
 
 

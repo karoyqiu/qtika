@@ -32,13 +32,13 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT TikaMimeKeys
 {
 protected:
-    TikaMimeKeys();
+    TikaMimeKeys() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~TikaMimeKeys() Q_DECL_EQ_DEFAULT;
 
-    const QString TIKA_MIME_FILE;
-    const QString MIME_TYPE_MAGIC;
+    static QString TIKA_MIME_FILE();
+    static QString MIME_TYPE_MAGIC();
 };
 
 

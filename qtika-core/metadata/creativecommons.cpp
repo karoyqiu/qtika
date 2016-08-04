@@ -23,11 +23,21 @@ namespace qtika {
 namespace metadata {
 
 
-CreativeCommons::CreativeCommons()
-    : LICENSE_URL("License-Url")
-    , LICENSE_LOCATION("License-Location")
-    , WORK_TYPE("Work-Type")
+QString CreativeCommons::LICENSE_URL()
 {
+    return QS("License-Url");
+}
+
+
+QString CreativeCommons::LICENSE_LOCATION()
+{
+    return QS("License-Location");
+}
+
+
+QString CreativeCommons::WORK_TYPE()
+{
+    return QS("Work-Type");
 }
 
 

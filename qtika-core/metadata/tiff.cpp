@@ -23,25 +23,122 @@ namespace qtika {
 namespace metadata {
 
 
-TIFF::TIFF()
-    : BITS_PER_SAMPLE(Property::internalIntegerSequence(QS("tiff:BitsPerSample")))
-    , IMAGE_LENGTH(Property::internalInteger(QS("tiff:ImageLength")))
-    , IMAGE_WIDTH(Property::internalInteger(QS("tiff:ImageWidth")))
-    , SAMPLES_PER_PIXEL(Property::internalInteger(QS("tiff:SamplesPerPixel")))
-    , FLASH_FIRED(Property::internalBoolean(QS("exif:Flash")))
-    , EXPOSURE_TIME(Property::internalRational(QS("exif:ExposureTime")))
-    , F_NUMBER(Property::internalRational(QS("exif:FNumber")))
-    , FOCAL_LENGTH(Property::internalRational(QS("exif:FocalLength")))
-    , ISO_SPEED_RATINGS(Property::internalIntegerSequence(QS("exif:IsoSpeedRatings")))
-    , EQUIPMENT_MAKE(Property::internalText(QS("tiff:Make")))
-    , EQUIPMENT_MODEL(Property::internalText(QS("tiff:Model")))
-    , SOFTWARE(Property::internalText(QS("tiff:Software")))
-    , ORIENTATION(Property::internalClosedChoice(QS("tiff:Orientation"), { "1", "2", "3", "4", "5", "6", "7", "8" }))
-    , RESOLUTION_HORIZONTAL(Property::internalRational(QS("tiff:XResolution")))
-    , RESOLUTION_VERTICAL(Property::internalRational(QS("tiff:YResolution")))
-    , RESOLUTION_UNIT(Property::internalClosedChoice(QS("tiff:ResolutionUnit"), { "Inch", "cm" }))
-    , ORIGINAL_DATE(Property::internalDate(QS("exif:DateTimeOriginal")))
+Property TIFF::BITS_PER_SAMPLE()
 {
+    static const Property p = Property::internalIntegerSequence(QS("tiff:BitsPerSample"));
+    return p;
+}
+
+
+Property TIFF::IMAGE_LENGTH()
+{
+    static const Property p = Property::internalInteger(QS("tiff:ImageLength"));
+    return p;
+}
+
+
+Property TIFF::IMAGE_WIDTH()
+{
+    static const Property p = Property::internalInteger(QS("tiff:ImageWidth"));
+    return p;
+}
+
+
+Property TIFF::SAMPLES_PER_PIXEL()
+{
+    static const Property p = Property::internalInteger(QS("tiff:SamplesPerPixel"));
+    return p;
+}
+
+
+Property TIFF::FLASH_FIRED()
+{
+    static const Property p = Property::internalBoolean(QS("exif:Flash"));
+    return p;
+}
+
+
+Property TIFF::EXPOSURE_TIME()
+{
+    static const Property p = Property::internalRational(QS("exif:ExposureTime"));
+    return p;
+}
+
+
+Property TIFF::F_NUMBER()
+{
+    static const Property p = Property::internalRational(QS("exif:FNumber"));
+    return p;
+}
+
+
+Property TIFF::FOCAL_LENGTH()
+{
+    static const Property p = Property::internalRational(QS("exif:FocalLength"));
+    return p;
+}
+
+
+Property TIFF::ISO_SPEED_RATINGS()
+{
+    static const Property p = Property::internalIntegerSequence(QS("exif:IsoSpeedRatings"));
+    return p;
+}
+
+
+Property TIFF::EQUIPMENT_MAKE()
+{
+    static const Property p = Property::internalText(QS("tiff:Make"));
+    return p;
+}
+
+
+Property TIFF::EQUIPMENT_MODEL()
+{
+    static const Property p = Property::internalText(QS("tiff:Model"));
+    return p;
+}
+
+
+Property TIFF::SOFTWARE()
+{
+    static const Property p = Property::internalText(QS("tiff:Software"));
+    return p;
+}
+
+
+Property TIFF::ORIENTATION()
+{
+    static const Property p = Property::internalClosedChoice(QS("tiff:Orientation"), { "1", "2", "3", "4", "5", "6", "7", "8" });
+    return p;
+}
+
+
+Property TIFF::RESOLUTION_HORIZONTAL()
+{
+    static const Property p = Property::internalRational(QS("tiff:XResolution"));
+    return p;
+}
+
+
+Property TIFF::RESOLUTION_VERTICAL()
+{
+    static const Property p = Property::internalRational(QS("tiff:YResolution"));
+    return p;
+}
+
+
+Property TIFF::RESOLUTION_UNIT()
+{
+    static const Property p = Property::internalClosedChoice(QS("tiff:ResolutionUnit"), { "Inch", "cm" });
+    return p;
+}
+
+
+Property TIFF::ORIGINAL_DATE()
+{
+    static const Property p = Property::internalDate(QS("exif:DateTimeOriginal"));
+    return p;
 }
 
 

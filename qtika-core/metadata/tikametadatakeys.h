@@ -32,16 +32,16 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT TikaMetadataKeys
 {
 protected:
-    TikaMetadataKeys();
+    TikaMetadataKeys() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~TikaMetadataKeys() Q_DECL_EQ_DEFAULT;
 
-    const QString RESOURCE_NAME_KEY;
-    const QString PROTECTED;
-    const QString EMBEDDED_RELATIONSHIP_ID;
-    const QString EMBEDDED_STORAGE_CLASS_ID;
-    const QString EMBEDDED_RESOURCE_TYPE;
+    static QString RESOURCE_NAME_KEY();
+    static QString PROTECTED();
+    static QString EMBEDDED_RELATIONSHIP_ID();
+    static QString EMBEDDED_STORAGE_CLASS_ID();
+    static QString EMBEDDED_RESOURCE_TYPE();
 };
 
 

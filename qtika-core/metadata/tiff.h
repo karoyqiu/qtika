@@ -36,72 +36,74 @@ namespace metadata {
  */
 class QTIKACORESHARED_EXPORT TIFF
 {
+protected:
+    TIFF() Q_DECL_EQ_DEFAULT;
+
 public:
-    TIFF();
     virtual ~TIFF() Q_DECL_EQ_DEFAULT;
 
 public:
     /**
      * "Number of bits per component in each channel."
      */
-    const Property BITS_PER_SAMPLE;
+    static Property BITS_PER_SAMPLE();
 
     /**
      * "Image height in pixels."
      */
-    const Property IMAGE_LENGTH;
+    static Property IMAGE_LENGTH();
 
     /**
      * "Image width in pixels."
      */
-    const Property IMAGE_WIDTH;
+    static Property IMAGE_WIDTH();
 
     /**
      * "Number of components per pixel."
      */
-    const Property SAMPLES_PER_PIXEL;
+    static Property SAMPLES_PER_PIXEL();
 
     /**
      * Did the Flash fire when taking this image?
      */
-    const Property FLASH_FIRED;
+    static Property FLASH_FIRED();
 
     /**
      * "Exposure time in seconds."
      */
-    const Property EXPOSURE_TIME;
+    static Property EXPOSURE_TIME();
 
     /**
      * "F-Number."
      * The f-number is the focal length divided by the "effective" aperture
      *  diameter. It is a dimensionless number that is a measure of lens speed.
      */
-    const Property F_NUMBER;
+    static Property F_NUMBER();
 
     /**
      * "Focal length of the lens, in millimeters."
      */
-    const Property FOCAL_LENGTH;
+    static Property FOCAL_LENGTH();
 
     /**
      * "ISO Speed and ISO Latitude of the input device as specified in ISO 12232"
      */
-    const Property ISO_SPEED_RATINGS;
+    static Property ISO_SPEED_RATINGS();
 
     /**
      * "Manufacturer of the recording equipment."
      */
-    const Property EQUIPMENT_MAKE;
+    static Property EQUIPMENT_MAKE();
 
     /**
      * "Model name or number of the recording equipment."
      */
-    const Property EQUIPMENT_MODEL;
+    static Property EQUIPMENT_MODEL();
 
     /**
      * "Software or firmware used to generate the image."
      */
-    const Property SOFTWARE;
+    static Property SOFTWARE();
 
     /**
      * "The Orientation of the image."
@@ -114,28 +116,28 @@ public:
      *  7 = 0th row at right, 0th column at bottom
      *  8 = 0th row at left, 0th column at bottom
      */
-    const Property ORIENTATION;
+    static Property ORIENTATION();
 
     /**
      * "Horizontal resolution in pixels per unit."
      */
-    const Property RESOLUTION_HORIZONTAL;
+    static Property RESOLUTION_HORIZONTAL();
 
     /**
      * "Vertical resolution in pixels per unit."
      */
-    const Property RESOLUTION_VERTICAL;
+    static Property RESOLUTION_VERTICAL();
 
     /**
      * "Units used for Horizontal and Vertical Resolutions."
      * One of "Inch" or "cm"
      */
-    const Property RESOLUTION_UNIT;
+    static Property RESOLUTION_UNIT();
 
     /**
      * "Date and time when original image was generated"
      */
-    const Property ORIGINAL_DATE;
+    static Property ORIGINAL_DATE();
 };
 
 

@@ -32,17 +32,16 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT Message
 {
 protected:
-    Message();
+    Message() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~Message() Q_DECL_EQ_DEFAULT;
 
-public:
-    const QString MESSAGE_RECIPIENT_ADDRESS;
-    const QString MESSAGE_FROM;
-    const QString MESSAGE_TO;
-    const QString MESSAGE_CC;
-    const QString MESSAGE_BCC;
+    static QString MESSAGE_RECIPIENT_ADDRESS();
+    static QString MESSAGE_FROM();
+    static QString MESSAGE_TO();
+    static QString MESSAGE_CC();
+    static QString MESSAGE_BCC();
 };
 
 

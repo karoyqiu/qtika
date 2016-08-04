@@ -51,9 +51,6 @@ public:
 };
 
 
-const QString Metadata::NAMESPACE_PREFIX_DELIMITER(":");
-
-
 QDateTime MetadataData::parseDate(const QString &date)
 {
     /**
@@ -392,6 +389,12 @@ QString Metadata::toString() const
     }
 
     return pairs.join(' ');
+}
+
+
+QString Metadata::NAMESPACE_PREFIX_DELIMITER()
+{
+    return QS(":");
 }
 
 

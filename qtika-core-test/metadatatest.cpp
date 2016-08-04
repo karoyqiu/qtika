@@ -180,26 +180,26 @@ void MetadataTest::testGetSetInt()
     Metadata meta;
 
     // Isn't initially set, will get null back
-    QVERIFY(meta.get(meta.IMAGE_WIDTH).isNull());
-    QCOMPARE(meta.getInt(meta.IMAGE_WIDTH), 0);
+    QVERIFY(meta.get(Metadata::IMAGE_WIDTH()).isNull());
+    QCOMPARE(meta.getInt(Metadata::IMAGE_WIDTH()), 0);
 
     // Can only set as a single valued int
-    QVERIFY_EXCEPTION_THROWN(meta.set(meta.BITS_PER_SAMPLE, 1), PropertyTypeException);
+    QVERIFY_EXCEPTION_THROWN(meta.set(Metadata::BITS_PER_SAMPLE(), 1), PropertyTypeException);
 
     // Can set it and retrieve it
-    meta.set(meta.IMAGE_WIDTH, 22);
-    QCOMPARE(meta.get(meta.IMAGE_WIDTH), QS("22"));
-    QCOMPARE(meta.getInt(meta.IMAGE_WIDTH), 22);
+    meta.set(Metadata::IMAGE_WIDTH(), 22);
+    QCOMPARE(meta.get(Metadata::IMAGE_WIDTH()), QS("22"));
+    QCOMPARE(meta.getInt(Metadata::IMAGE_WIDTH()), 22);
 
     // If you save a non int value, you get null
-    meta.set(meta.IMAGE_WIDTH, "INVALID");
-    QCOMPARE(meta.get(meta.IMAGE_WIDTH), QS("INVALID"));
-    QCOMPARE(meta.getInt(meta.IMAGE_WIDTH), 0);
+    meta.set(Metadata::IMAGE_WIDTH(), "INVALID");
+    QCOMPARE(meta.get(Metadata::IMAGE_WIDTH()), QS("INVALID"));
+    QCOMPARE(meta.getInt(Metadata::IMAGE_WIDTH()), 0);
 
     // If you try to retrieve a non simple int value, you get null
-    meta.set(meta.IMAGE_WIDTH, 22);
-    QCOMPARE(meta.getInt(meta.IMAGE_WIDTH), 22);
-    QCOMPARE(meta.getInt(meta.BITS_PER_SAMPLE), 0);
+    meta.set(Metadata::IMAGE_WIDTH(), 22);
+    QCOMPARE(meta.getInt(Metadata::IMAGE_WIDTH()), 22);
+    QCOMPARE(meta.getInt(Metadata::BITS_PER_SAMPLE()), 0);
 }
 
 
@@ -209,58 +209,58 @@ void MetadataTest::testGetSetDate()
     qint64 hour = 60 * 60 * 1000;
 
     // Isn't initially set, will get null back
-    QVERIFY(meta.get(meta.LAST_MODIFIED).isNull());
-    QCOMPARE(meta.getInt(meta.LAST_MODIFIED), 0);
+    QVERIFY(meta.get(Metadata::LAST_MODIFIED()).isNull());
+    QCOMPARE(meta.getInt(Metadata::LAST_MODIFIED()), 0);
 
     // Can only set as a single valued date
-    QVERIFY_EXCEPTION_THROWN(meta.set(meta.BITS_PER_SAMPLE, QDateTime::fromMSecsSinceEpoch(1000)),
+    QVERIFY_EXCEPTION_THROWN(meta.set(Metadata::BITS_PER_SAMPLE(), QDateTime::fromMSecsSinceEpoch(1000)),
                              PropertyTypeException);
-    QVERIFY_EXCEPTION_THROWN(meta.set(meta.IMAGE_WIDTH, QDateTime::fromMSecsSinceEpoch(1000)),
+    QVERIFY_EXCEPTION_THROWN(meta.set(Metadata::IMAGE_WIDTH(), QDateTime::fromMSecsSinceEpoch(1000)),
                              PropertyTypeException);
 
     // Can set it and retrieve it
     QDateTime oneSecond = QDateTime::fromMSecsSinceEpoch(1000, Qt::UTC);
-    meta.set(meta.LAST_MODIFIED, oneSecond);
-    QCOMPARE(meta.get(meta.LAST_MODIFIED), QS("1970-01-01T00:00:01Z"));
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), oneSecond);
+    QCOMPARE(meta.get(Metadata::LAST_MODIFIED()), QS("1970-01-01T00:00:01Z"));
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
 
     // If you save a non date value, you get null
-    meta.set(meta.LAST_MODIFIED, "INVALID");
-    QCOMPARE(meta.get(meta.LAST_MODIFIED), QS("INVALID"));
-    QVERIFY(meta.getDate(meta.LAST_MODIFIED).isNull());
+    meta.set(Metadata::LAST_MODIFIED(), "INVALID");
+    QCOMPARE(meta.get(Metadata::LAST_MODIFIED()), QS("INVALID"));
+    QVERIFY(meta.getDate(Metadata::LAST_MODIFIED()).isNull());
 
     // If you try to retrieve a non simple date value, you get null
-    meta.set(meta.LAST_MODIFIED, oneSecond);
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
-    QCOMPARE(meta.getInt(meta.BITS_PER_SAMPLE), 0);
-    QCOMPARE(meta.getInt(meta.LAST_MODIFIED), 0);
+    meta.set(Metadata::LAST_MODIFIED(), oneSecond);
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
+    QCOMPARE(meta.getInt(Metadata::BITS_PER_SAMPLE()), 0);
+    QCOMPARE(meta.getInt(Metadata::LAST_MODIFIED()), 0);
 
     // Our format doesn't include milliseconds
     // This means things get rounded
-    meta.set(meta.LAST_MODIFIED, QDateTime::fromMSecsSinceEpoch(1050, Qt::UTC));
-    QCOMPARE(meta.get(meta.LAST_MODIFIED), QS("1970-01-01T00:00:01Z"));
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), QDateTime::fromMSecsSinceEpoch(1050, Qt::UTC));
+    QCOMPARE(meta.get(Metadata::LAST_MODIFIED()), QS("1970-01-01T00:00:01Z"));
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
 
     // We can accept a number of different ISO-8601 variants
-    meta.set(meta.LAST_MODIFIED, "1970-01-01T00:00:01Z");
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
-    meta.set(meta.LAST_MODIFIED, "1970-01-01 00:00:01Z");
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
-    meta.set(meta.LAST_MODIFIED, "1970-01-01T01:00:01+01:00");
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
-    meta.set(meta.LAST_MODIFIED, "1970-01-01 01:00:01+01:00");
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
-    meta.set(meta.LAST_MODIFIED, "1970-01-01T12:00:01+12:00");
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
-    meta.set(meta.LAST_MODIFIED, "1969-12-31T12:00:01-12:00");
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), "1970-01-01T00:00:01Z");
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), "1970-01-01 00:00:01Z");
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), "1970-01-01T01:00:01+01:00");
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), "1970-01-01 01:00:01+01:00");
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), "1970-01-01T12:00:01+12:00");
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
+    meta.set(Metadata::LAST_MODIFIED(), "1969-12-31T12:00:01-12:00");
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()), oneSecond);
 
     // Dates without times, come in at midday UTC
-    meta.set(meta.LAST_MODIFIED, "1970-01-01");
-    QVERIFY(!meta.getDate(meta.LAST_MODIFIED).isNull());
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED).toMSecsSinceEpoch(), 12 * hour);
-    meta.set(meta.LAST_MODIFIED, "1970:01:01");
-    QCOMPARE(meta.getDate(meta.LAST_MODIFIED).toMSecsSinceEpoch(), 12 * hour);
+    meta.set(Metadata::LAST_MODIFIED(), "1970-01-01");
+    QVERIFY(!meta.getDate(Metadata::LAST_MODIFIED()).isNull());
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()).toMSecsSinceEpoch(), 12 * hour);
+    meta.set(Metadata::LAST_MODIFIED(), "1970:01:01");
+    QCOMPARE(meta.getDate(Metadata::LAST_MODIFIED()).toMSecsSinceEpoch(), 12 * hour);
 }
 
 
@@ -269,12 +269,12 @@ void MetadataTest::testGetSetDateUnspecifiedTimezone()
     Metadata meta;
 
     // Set explictly without a timezone
-    meta.set(meta.LAST_MODIFIED, "1970-01-01T00:00:01");
-    QCOMPARE(meta.get(meta.LAST_MODIFIED), QS("1970-01-01T00:00:01"));
+    meta.set(Metadata::LAST_MODIFIED(), "1970-01-01T00:00:01");
+    QCOMPARE(meta.get(Metadata::LAST_MODIFIED()), QS("1970-01-01T00:00:01"));
 
     // Now ask DateUtils to format for us without one
-    meta.set(meta.LAST_MODIFIED, qtika::utils::DateUtils::formatDateUnknownTimezone(QDateTime::fromMSecsSinceEpoch(1000)));
-    QCOMPARE(meta.get(meta.LAST_MODIFIED), QS("1970-01-01T00:00:01"));
+    meta.set(Metadata::LAST_MODIFIED(), qtika::utils::DateUtils::formatDateUnknownTimezone(QDateTime::fromMSecsSinceEpoch(1000)));
+    QCOMPARE(meta.get(Metadata::LAST_MODIFIED()), QS("1970-01-01T00:00:01"));
 }
 
 

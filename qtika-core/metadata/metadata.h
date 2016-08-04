@@ -241,7 +241,7 @@ public:
     /**
      * The common delimiter used between the namespace abbreviation and the property name
      */
-    static const QString NAMESPACE_PREFIX_DELIMITER;
+    static QString NAMESPACE_PREFIX_DELIMITER();
 
 private:
     friend QTIKACORESHARED_EXPORT bool operator==(const Metadata &lhs, const Metadata &rhs);

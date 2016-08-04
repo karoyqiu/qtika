@@ -37,7 +37,7 @@ namespace metadata {
 class QTIKACORESHARED_EXPORT Geographic
 {
 protected:
-    Geographic();
+    Geographic() Q_DECL_EQ_DEFAULT;
 
 public:
     virtual ~Geographic() Q_DECL_EQ_DEFAULT;
@@ -46,17 +46,17 @@ public:
     /**
      * The WGS84 Latitude of the Point
      */
-    const Property LATITUDE;
+    static Property LATITUDE();
 
     /**
      * The WGS84 Longitude of the Point
      */
-    const Property LONGITUDE;
+    static Property LONGITUDE();
 
     /**
      * The WGS84 Altitude of the Point
      */
-    const Property ALTITUDE;
+    static Property ALTITUDE();
 };
 
 

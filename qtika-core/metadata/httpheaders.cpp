@@ -23,17 +23,58 @@ namespace qtika {
 namespace metadata {
 
 
-HttpHeaders::HttpHeaders()
-    : CONTENT_ENCODING("Content-Encoding")
-    , CONTENT_LANGUAGE("Content-Language")
-    , CONTENT_LENGTH("Content-Length")
-    , CONTENT_LOCATION("Content-Location")
-    , CONTENT_DISPOSITION("Content-Disposition")
-    , CONTENT_MD5("Content-MD5")
-    , CONTENT_TYPE("Content-Type")
-    , LAST_MODIFIED(Property::internalDate(QS("Last-Modified")))
-    , LOCATION("Location")
+QString HttpHeaders::CONTENT_ENCODING()
 {
+    return QS("Content-Encoding");
+}
+
+
+QString HttpHeaders::CONTENT_LANGUAGE()
+{
+    return QS("Content-Language");
+}
+
+
+QString HttpHeaders::CONTENT_LENGTH()
+{
+    return QS("Content-Length");
+}
+
+
+QString HttpHeaders::CONTENT_LOCATION()
+{
+    return QS("Content-Location");
+}
+
+
+QString HttpHeaders::CONTENT_DISPOSITION()
+{
+    return QS("Content-Disposition");
+}
+
+
+QString HttpHeaders::CONTENT_MD5()
+{
+    return QS("Content-MD5");
+}
+
+
+QString HttpHeaders::CONTENT_TYPE()
+{
+    return QS("Content-Type");
+}
+
+
+Property HttpHeaders::LAST_MODIFIED()
+{
+    static const Property p = Property::internalDate(QS("Last-Modified"));
+    return p;
+}
+
+
+QString HttpHeaders::LOCATION()
+{
+    return QS("Location");
 }
 
 

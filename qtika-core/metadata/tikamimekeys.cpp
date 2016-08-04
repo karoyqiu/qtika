@@ -23,10 +23,15 @@ namespace qtika {
 namespace metadata {
 
 
-TikaMimeKeys::TikaMimeKeys()
-    : TIKA_MIME_FILE("tika.mime.file")
-    , MIME_TYPE_MAGIC("mime.type.magic")
+QString TikaMimeKeys::TIKA_MIME_FILE()
 {
+    return QS("tika.mime.file");
+}
+
+
+QString TikaMimeKeys::MIME_TYPE_MAGIC()
+{
+    return QS("mime.type.magic");
 }
 
 
