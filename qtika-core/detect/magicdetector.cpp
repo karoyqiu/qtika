@@ -16,12 +16,52 @@
  */
 #include "stable.h"
 #include "magicdetector.h"
+
+#include <QRegularExpression>
+
 #include "mime/mediatype.h"
 
 
 namespace qtika {
 
 namespace detect {
+
+namespace {
+
+class IOTransactionRollback
+{
+public:
+    explicit IOTransactionRollback(QIODevice *device);
+    ~IOTransactionRollback();
+
+    void commit();
+
+private:
+    QIODevice *device_;
+};
+
+
+IOTransactionRollback::IOTransactionRollback(QIODevice *device)
+    : device_(device)
+{
+    Q_ASSERT(device != Q_NULLPTR);
+    device->startTransaction();
+}
+
+
+IOTransactionRollback::~IOTransactionRollback()
+{
+    device_->rollbackTransaction();
+}
+
+
+void IOTransactionRollback::commit()
+{
+    device_->commitTransaction();
+    device_->startTransaction();
+}
+
+}
 
 
 using mime::MediaType;
@@ -186,6 +226,118 @@ MagicDetector::~MagicDetector()
 }
 
 
+MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta)
+{
+    Q_UNUSED(meta)
+
+    if (input == Q_NULLPTR)
+    {
+        return MediaType::OCTET_STREAM();
+    }
+
+    MediaType type = MediaType::OCTET_STREAM();
+    IOTransactionRollback rollback(input);
+
+    int offset = 0;
+
+    // Skip bytes at the beginning, using skip() or read()
+    while (offset < data->offsetRangeBegin)
+    {
+        QByteArray bytes = input->read(data->offsetRangeBegin - offset);
+
+        if (!bytes.isEmpty())
+        {
+            offset += bytes.length();
+        }
+        else if (!input->atEnd())
+        {
+            offset += 1;
+        }
+        else
+        {
+            return type;
+        }
+    }
+
+    // Fill in the comparison window
+    QByteArray buffer(data->length + (data->offsetRangeEnd - data->offsetRangeBegin), 0);
+    qint64 n = input->read(buffer.data(), buffer.length());
+
+    if (n > 0)
+    {
+        offset += n;
+    }
+
+    while (n != -1 && offset < data->offsetRangeEnd + data->length)
+    {
+        int bufferOffset = offset - data->offsetRangeBegin;
+        n = input->read(buffer.data() + bufferOffset, buffer.length() - bufferOffset);
+
+        if (n > 0)
+        {
+            offset += n;
+        }
+    }
+
+    if (data->isRegex)
+    {
+        QRegularExpression::PatternOptions flags = 0;
+
+        if (data->isStringIgnoreCase)
+        {
+            flags = QRegularExpression::CaseInsensitiveOption;
+        }
+
+        QRegularExpression regex(QString::fromUtf8(data->pattern), flags);
+        QString result = QString::fromLatin1(buffer);
+
+        // Loop until we've covered the entire offset range
+        for (int i = 0; i <= data->offsetRangeEnd - data->offsetRangeBegin; i++)
+        {
+            QStringRef region = result.midRef(i, data->length);
+            auto m = regex.match(QString::fromLatin1(buffer));
+
+            if (m.hasMatch())
+            {
+                rollback.commit();
+                type = data->type;
+                break;
+            }
+        }
+    }
+    else if (offset >= data->offsetRangeBegin + data->length)
+    {
+        // Loop until we've covered the entire offset range
+        for (int i = 0; i <= data->offsetRangeEnd - data->offsetRangeBegin; i++)
+        {
+            bool match = true;
+            int masked = 0;
+
+            for (int j = 0; match && j < data->length; j++)
+            {
+                masked = (buffer.at(i + j) & data->mask.at(j));
+
+                if (data->isStringIgnoreCase)
+                {
+                    masked = tolower(masked);
+                }
+
+                match = (masked == data->pattern.at(j));
+            }
+
+            if (match)
+            {
+                rollback.commit();
+                type = data->type;
+                break;
+            }
+        }
+    }
+
+    return type;
+}
+
+
 int MagicDetector::length() const
 {
     return data->patternLength;
@@ -200,7 +352,6 @@ QString MagicDetector::toString() const
             .arg(QString::fromUtf8(data->pattern.toHex()))
             .arg(QString::fromUtf8(data->mask.toHex()));
 }
-
 
 }       // namespace detect
 

@@ -82,6 +82,13 @@ public:
      */
     QString toString() const;
 
+    /**
+     *
+     * @param input document input stream, or <code>null</code>
+     * @param metadata ignored
+     */
+    virtual MediaType detect(QIODevice *input, const Metadata &meta) Q_DECL_OVERRIDE;
+
 private:
     QSharedDataPointer<MagicDetectorData> data;
 };
