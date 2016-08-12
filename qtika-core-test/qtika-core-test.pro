@@ -28,12 +28,14 @@ PRECOMPILED_HEADER = stable.h
 SOURCES += main.cpp \
     mediatypetest.cpp \
     metadatatest.cpp \
-    namedetectortest.cpp
+    namedetectortest.cpp \
+    magicdetectortest.cpp
 
 HEADERS += \
     mediatypetest.h \
     metadatatest.h \
-    namedetectortest.h
+    namedetectortest.h \
+    magicdetectortest.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/release/ -lqtika-core
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/debug/ -lqtika-core

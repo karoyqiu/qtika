@@ -60,6 +60,14 @@ public:
                   bool isRegex, int offsetRangeBegin, int offsetRangeEnd);
 
     /**
+     * Creates a detector for input documents that meet the specified magic
+     * match.  {@code pattern} must NOT be a regular expression.
+     * Constructor maintained for legacy reasons.
+     */
+    MagicDetector(const mime::MediaType &type, const QByteArray &pattern, const QByteArray &mask,
+                  int offsetRangeBegin, int offsetRangeEnd);
+
+    /**
      * Creates a detector for input documents that have the exact given byte
      * pattern at the given offset of the document stream.
      *
@@ -88,6 +96,10 @@ public:
      * @param metadata ignored
      */
     virtual MediaType detect(QIODevice *input, const Metadata &meta) Q_DECL_OVERRIDE;
+
+public:
+    static MagicDetector parse(const MediaType &mediaType, const QString &type, const QString &offset,
+                               const QString &value, const QString &mask);
 
 private:
     QSharedDataPointer<MagicDetectorData> data;

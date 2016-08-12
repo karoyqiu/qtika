@@ -70,6 +70,10 @@ using mime::MediaType;
 class MagicDetectorData : public QSharedData
 {
 public:
+    static QByteArray decodeValue(const QString &value, const QString &type);
+    static QByteArray decodeString(const QString &value, const QString &type);
+
+public:
     /**
      * The matching media type. Returned by the
      * {@link #detect(InputStream, Metadata)} method if a match is found.
@@ -126,6 +130,174 @@ public:
      */
     int offsetRangeEnd;
 };
+
+
+QByteArray MagicDetectorData::decodeValue(const QString &value, const QString &type)
+{
+    // Preliminary check
+    if (value.isEmpty() || type.isEmpty())
+    {
+        return QByteArray();
+    }
+
+    QByteArray decoded;
+    QString tmp;
+    int radix = 8;
+
+    // hex
+    if (value.startsWith(QLatin1String("0x")))
+    {
+        tmp = value.mid(2);
+        radix = 16;
+    }
+    else
+    {
+        tmp = value;
+    }
+
+    if (type == "string" || type == "regex" || type == "unicodeLE" || type == "unicodeBE")
+    {
+        decoded = decodeString(value, type);
+    }
+    else if (type == "stringignorecase")
+    {
+        decoded = decodeString(value.toLower(), type);
+    }
+    else if (type == "byte")
+    {
+        decoded = tmp.toUtf8();
+    }
+    else if (type == "host16" || type == "little16")
+    {
+        ushort i = tmp.toUShort(Q_NULLPTR, radix);
+        decoded.resize(sizeof(i));
+        memcpy(decoded.data(), &i, sizeof(i));
+    }
+    else if (type == "big16")
+    {
+        ushort i = tmp.toUShort(Q_NULLPTR, radix);
+#if defined(Q_CC_MSVC)
+        i = _byteswap_ushort(i);
+#else
+#error "Unsupported compiler."
+#endif
+        decoded.resize(sizeof(i));
+        memcpy(decoded.data(), &i, sizeof(i));
+    }
+    else if (type == "host32" || type == "little32")
+    {
+        static_assert(sizeof(uint) == 4, "The size of uint is not 4.");
+        uint i = tmp.toUInt(Q_NULLPTR, radix);
+        decoded.resize(sizeof(i));
+        memcpy(decoded.data(), &i, sizeof(i));
+    }
+    else if (type == "big32")
+    {
+        uint i = tmp.toUInt(Q_NULLPTR, radix);
+#if defined(Q_CC_MSVC)
+        i = _byteswap_ulong(i);
+#else
+#endif
+        decoded.resize(sizeof(i));
+        memcpy(decoded.data(), &i, sizeof(i));
+    }
+
+    return decoded;
+}
+
+
+QByteArray MagicDetectorData::decodeString(const QString &value, const QString &type)
+{
+    if (value.startsWith("0x"))
+    {
+        return QByteArray::fromHex(value.mid(2).toLatin1());
+    }
+
+    QString decoded;
+
+    for (int i = 0; i < value.length(); i++)
+    {
+        if (value.at(i) == '\\')
+        {
+            if (value.at(i + 1) == '\\')
+            {
+                decoded.append('\\');
+                i++;
+            }
+            else if (value.at(i + 1) == 'x')
+            {
+                decoded.append(QChar(value.mid(i + 2, 2).toInt(Q_NULLPTR, 16)));
+                i += 3;
+            }
+            else if (value.at(i + 1) == '\r')
+            {
+                decoded.append('\r');
+                i++;
+            }
+            else if (value.at(i + 1) == '\n')
+            {
+                decoded.append('\n');
+                i++;
+            }
+            else
+            {
+                int j = i + 1;
+
+                while (j < i + 4 && j < value.length() && value.at(j).isDigit())
+                {
+                    j++;
+                }
+
+                decoded.append(QChar(value.mid(i + 1, j - (i + 1)).toShort(Q_NULLPTR, 8)));
+                i = j - 1;
+            }
+        }
+        else
+        {
+            decoded.append(value.at(i));
+        }
+    }
+
+    // Now turn the chars into bytes
+    const QChar *chars = decoded.unicode();
+    QByteArray bytes;
+
+    if (type == "unicodeLE")
+    {
+        bytes.resize(decoded.length() * 2);
+
+        for (int i = 0; i < decoded.length(); i++)
+        {
+            bytes[i * 2] = static_cast<char>(chars->unicode() & 0xff);
+            bytes[i * 2 + 1] = static_cast<char>(chars->unicode() >> 8);
+            chars++;
+        }
+    }
+    else if (type == "unicodeBE")
+    {
+        bytes.resize(decoded.length() * 2);
+
+        for (int i = 0; i < decoded.length(); i++)
+        {
+            bytes[i * 2] = static_cast<char>(chars->unicode() >> 8);
+            bytes[i * 2 + 1] = static_cast<char>(chars->unicode() & 0xff);
+            chars++;
+        }
+    }
+    else
+    {
+        // Copy with truncation
+        bytes.resize(decoded.length());
+
+        for (int i = 0; i < decoded.length(); i++)
+        {
+            bytes[i] = static_cast<char>(chars->unicode());
+            chars++;
+        }
+    }
+
+    return bytes;
+}
 
 
 MagicDetector::MagicDetector(const MediaType &type,
@@ -194,6 +366,14 @@ MagicDetector::MagicDetector(const MediaType &type,
                              const QByteArray &pattern, const QByteArray &mask, bool isRegex,
                              int offsetRangeBegin, int offsetRangeEnd)
     : MagicDetector(type, pattern, mask, isRegex, false, offsetRangeBegin, offsetRangeEnd)
+{
+}
+
+
+MagicDetector::MagicDetector(const mime::MediaType &type,
+                             const QByteArray &pattern, const QByteArray &mask,
+                             int offsetRangeBegin, int offsetRangeEnd)
+    : MagicDetector(type, pattern, mask, false, offsetRangeBegin, offsetRangeEnd)
 {
 }
 
@@ -268,7 +448,7 @@ MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta)
         offset += n;
     }
 
-    while (n != -1 && offset < data->offsetRangeEnd + data->length)
+    while (n > 0 && offset < data->offsetRangeEnd + data->length)
     {
         int bufferOffset = offset - data->offsetRangeBegin;
         n = input->read(buffer.data() + bufferOffset, buffer.length() - bufferOffset);
@@ -299,7 +479,6 @@ MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta)
 
             if (m.hasMatch())
             {
-                rollback.commit();
                 type = data->type;
                 break;
             }
@@ -327,7 +506,6 @@ MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta)
 
             if (match)
             {
-                rollback.commit();
                 type = data->type;
                 break;
             }
@@ -335,6 +513,41 @@ MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta)
     }
 
     return type;
+}
+
+
+MagicDetector MagicDetector::parse(const Detector::MediaType &mediaType, const QString &type,
+                                   const QString &offset, const QString &value, const QString &mask)
+{
+    int start = 0;
+    int end = 0;
+
+    if (!offset.isEmpty())
+    {
+        int colon = offset.indexOf(':');
+
+        if (colon == -1)
+        {
+            start = offset.toInt();
+            end = start;
+        }
+        else
+        {
+            start = offset.left(colon).toInt();
+            end = offset.mid(colon + 1).toInt();
+        }
+    }
+
+    QByteArray patternBytes = MagicDetectorData::decodeValue(value, type);
+    QByteArray maskBytes;
+
+    if (!mask.isEmpty())
+    {
+        maskBytes = MagicDetectorData::decodeValue(mask, type);
+    }
+
+    return MagicDetector(mediaType, patternBytes, maskBytes, type == "regex",
+                         type == "stringignorecase", start, end);
 }
 
 

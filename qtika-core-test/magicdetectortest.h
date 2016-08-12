@@ -14,37 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "stable.h"
+#pragma once
 
-#include <QtTest>
-#include <QCoreApplication>
-
-#include "mediatypetest.h"
-#include "metadatatest.h"
-#include "namedetectortest.h"
-#include "magicdetectortest.h"
+#include <QObject>
 
 
-int main(int argc, char *argv[])
+/**
+ * Test cases for the {@link MagicDetector} class.
+ */
+class MagicDetectorTest : public QObject
 {
-    QCoreApplication app(argc, argv);
-    app.setAttribute(Qt::AA_Use96Dpi, true);
+    Q_OBJECT
 
-    QTEST_SET_MAIN_SOURCE_PATH
-
-    int result = 0;
-
-    MediaTypeTest mediaTypeTest;
-    result += QTest::qExec(&mediaTypeTest);
-
-    MetadataTest metadataTest;
-    result += QTest::qExec(&metadataTest);
-
-    NameDetectorTest nameDetectorTest;
-    result += QTest::qExec(&nameDetectorTest);
-
-    MagicDetectorTest magicDetectorTest;
-    result += QTest::qExec(&magicDetectorTest);
-
-    return result;
-}
+private slots:
+    void testDetectNull();
+    void testDetectSimple();
+    void testDetectOffsetRange();
+    void testDetectMask();
+    void testDetectRegExPDF();
+    void testDetectRegExGreedy();
+    void testDetectRegExOptions();
+    void testDetectStreamReadProblems();
+    void testDetectString();
+};
