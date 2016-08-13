@@ -18,6 +18,7 @@
 #include "magicdetector.h"
 
 #include <QRegularExpression>
+#include <qiodevicetransactionrollback.h>
 
 #include "mime/mediatype.h"
 
@@ -25,43 +26,6 @@
 namespace qtika {
 
 namespace detect {
-
-namespace {
-
-class IOTransactionRollback
-{
-public:
-    explicit IOTransactionRollback(QIODevice *device);
-    ~IOTransactionRollback();
-
-    void commit();
-
-private:
-    QIODevice *device_;
-};
-
-
-IOTransactionRollback::IOTransactionRollback(QIODevice *device)
-    : device_(device)
-{
-    Q_ASSERT(device != Q_NULLPTR);
-    device->startTransaction();
-}
-
-
-IOTransactionRollback::~IOTransactionRollback()
-{
-    device_->rollbackTransaction();
-}
-
-
-void IOTransactionRollback::commit()
-{
-    device_->commitTransaction();
-    device_->startTransaction();
-}
-
-}
 
 
 using mime::MediaType;
@@ -416,7 +380,7 @@ MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta)
     }
 
     MediaType type = MediaType::OCTET_STREAM();
-    IOTransactionRollback rollback(input);
+    internal::QIODeviceTransactionRollback rollback(input);
 
     int offset = 0;
 
