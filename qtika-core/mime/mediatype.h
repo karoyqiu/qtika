@@ -118,6 +118,7 @@ public:
     static MediaType video(const QString &type);
 
     static MediaType OCTET_STREAM();
+    static MediaType EMPTY();
     static MediaType TEXT_PLAIN();
     static MediaType TEXT_HTML();
     static MediaType APPLICATION_XML();
@@ -129,6 +130,7 @@ private:
 
 
 QTIKACORESHARED_EXPORT bool operator==(const MediaType &lhs, const MediaType &rhs);
+QTIKACORESHARED_EXPORT bool operator!=(const MediaType &lhs, const MediaType &rhs);
 QTIKACORESHARED_EXPORT bool operator<(const MediaType &lhs, const MediaType &rhs);
 
 QTIKACORESHARED_EXPORT uint qHash(const MediaType &lhs, uint seed);

@@ -459,6 +459,13 @@ MediaType MediaType::OCTET_STREAM()
 }
 
 
+MediaType MediaType::EMPTY()
+{
+    static const MediaType type = MediaType::parse(QS("application/x-empty"));
+    return type;
+}
+
+
 MediaType MediaType::TEXT_PLAIN()
 {
     static const MediaType type = MediaType::parse(QS("text/plain"));
@@ -493,6 +500,12 @@ bool operator==(const MediaType &lhs, const MediaType &rhs)
 }
 
 
+bool operator!=(const MediaType &lhs, const MediaType &rhs)
+{
+    return !(lhs == rhs);
+}
+
+
 bool operator<(const MediaType &lhs, const MediaType &rhs)
 {
     return lhs.toString() < rhs.toString();
@@ -503,6 +516,7 @@ uint qHash(const MediaType &lhs, uint seed)
 {
     return qHash(lhs.toString(), seed);
 }
+
 
 }       // namespace mime
 

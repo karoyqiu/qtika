@@ -331,12 +331,6 @@ bool MimeType::matchesMagic(const QByteArray &d) const
 }
 
 
-bool MimeType::operator<(const MimeType &rhs) const
-{
-    return data->type < rhs.data->type;
-}
-
-
 QString MimeType::toString() const
 {
     return data->type.toString();
@@ -410,6 +404,12 @@ bool operator==(const MimeType &lhs, const MimeType &rhs)
 bool operator!=(const MimeType &lhs, const MimeType &rhs)
 {
     return !(lhs == rhs);
+}
+
+
+bool operator<(const MimeType &lhs, const MimeType &rhs)
+{
+    return lhs.type() < rhs.type();
 }
 
 

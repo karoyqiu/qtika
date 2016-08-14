@@ -155,7 +155,6 @@ public:
 
     bool matches(const QByteArray &d) const { return matchesMagic(d); }
 
-    bool operator<(const MimeType &rhs) const;
 
     /**
      * Returns the name of this media type.
@@ -214,6 +213,7 @@ private:
 
 bool operator==(const MimeType &lhs, const MimeType &rhs);
 bool operator!=(const MimeType &lhs, const MimeType &rhs);
+bool operator<(const MimeType &lhs, const MimeType &rhs);
 uint qHash(const MimeType &m, uint seed);
 
 
