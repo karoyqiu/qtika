@@ -41,7 +41,9 @@ SOURCES += \
     utils/dateutils.cpp \
     metadata/dublincore.cpp \
     detect/namedetector.cpp \
-    detect/magicdetector.cpp
+    detect/magicdetector.cpp \
+    mime/mimetype.cpp \
+    mime/magic.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -64,7 +66,10 @@ HEADERS += \
     metadata/dublincore.h \
     detect/detector.h \
     detect/namedetector.h \
-    detect/magicdetector.h
+    detect/magicdetector.h \
+    mime/mimetype.h \
+    mime/clause.h \
+    mime/magic.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
