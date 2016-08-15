@@ -44,7 +44,9 @@ SOURCES += \
     detect/magicdetector.cpp \
     mime/mimetype.cpp \
     mime/magic.cpp \
-    mime/mediatyperegistry.cpp
+    mime/mediatyperegistry.cpp \
+    mime/mimetypes.cpp \
+    mime/patterns.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -71,7 +73,11 @@ HEADERS += \
     mime/mimetype.h \
     mime/clause.h \
     mime/magic.h \
-    mime/mediatyperegistry.h
+    mime/mediatyperegistry.h \
+    mime/mimetypes.h \
+    mime/patterns.h \
+    exception/tikaexception.h \
+    mime/mimetypeexception.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
