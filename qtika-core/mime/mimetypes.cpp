@@ -17,8 +17,10 @@
 #include "stable.h"
 #include "mimetypes.h"
 
+#include "detect/textdetector.h"
+#include "detect/xmlrootextractor.h"
+#include "magic.h"
 #include "mediatyperegistry.h"
-#include "mimetype.h"
 #include "patterns.h"
 
 
@@ -71,6 +73,12 @@ public:
 
     /** The patterns matcher */
     Patterns patterns;
+
+    /** Sorted list of all registered magics */
+    QList<Magic> magics;
+
+    /** Sorted list of all registered rootXML */
+    QList<MimeType> xmls;
 };
 
 
@@ -82,6 +90,15 @@ const QString MimeTypesData::XML("application/xml");
 MimeTypes::MimeTypes()
     : data(new MimeTypesData)
 {
+    data->rootMimeType = MediaType::OCTET_STREAM();
+    data->textMimeType = MediaType::TEXT_PLAIN();
+    data->xmlMimeType = MediaType::APPLICATION_XML();
+
+    data->rootMimeTypes.append(data->rootMimeType);
+
+    add(data->rootMimeType);
+    add(data->textMimeType);
+    add(data->xmlMimeType);
 }
 
 
@@ -104,6 +121,104 @@ MimeTypes &MimeTypes::operator=(const MimeTypes &rhs)
 
 MimeTypes::~MimeTypes()
 {
+}
+
+
+QList<MimeType> MimeTypes::getMimeType(const QByteArray &d) const
+{
+    if (d.isNull())
+    {
+        throw std::invalid_argument("Data is missing.");
+    }
+
+    if (d.isEmpty())
+    {
+        // See https://issues.apache.org/jira/browse/TIKA-483
+        return data->rootMimeTypes;
+    }
+
+    // Then, check for magic bytes
+    QList<MimeType> result;
+    int currentPriority = -1;
+
+    for (const Magic &magic : data->magics)
+    {
+        if (currentPriority > 0 && currentPriority > magic.priority())
+        {
+            break;
+        }
+
+        if (magic.eval(d))
+        {
+            result.append(magic.type());
+            currentPriority = magic.priority();
+        }
+    }
+
+    if (!result.isEmpty())
+    {
+        for (int i = 0; i < result.size(); i++)
+        {
+            MimeType matched = result.at(i);
+
+            // When detecting generic XML (or possibly XHTML),
+            // extract the root element and match it against known types
+            if (matched.name() == "application/xml" || matched.name() == "text/html")
+            {
+                auto rootElement = qtika::detect::XmlRootExtractor::extractRootElement(d);
+
+                if (!rootElement.isNull())
+                {
+                    for (const MimeType &type : data->xmls)
+                    {
+                        if (type.matchesXML(rootElement.namespaceURI, rootElement.localName))
+                        {
+                            result[i] = type;
+                            break;
+                        }
+                    }
+                }
+                else if (matched.name() == "application/xml")
+                {
+                    // Downgrade from application/xml to text/plain since
+                    // the document seems not to be well-formed.
+                    result[i] = data->textMimeType;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // Finally, assume plain text if no control bytes are found
+    try
+    {
+        // UNDONE: TextDetector detector = new TextDetector(getMinLength());
+        //qtika::detect::TextDetector detector(min)
+    }
+    catch (const std::exception &)
+    {
+        return data->rootMimeTypes;
+    }
+}
+
+
+void MimeTypes::add(const MimeType &type)
+{
+    data->registry.addType(type.type());
+    data->types.insert(type.type(), type);
+
+    // Update the magics index...
+    if (type.hasMagic())
+    {
+        data->magics.append(type.magics());
+    }
+
+    // Update the xml (xmlRoot) index...
+    if (type.hasRootXML())
+    {
+        data->xmls.append(type);
+    }
 }
 
 

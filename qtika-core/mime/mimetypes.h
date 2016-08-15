@@ -18,6 +18,7 @@
 
 #include "qtika-core-global.h"
 #include "detect/detector.h"
+#include "mimetype.h"
 
 #include <QSharedDataPointer>
 
@@ -27,6 +28,7 @@ namespace qtika {
 namespace mime {
 
 
+class MimeType;
 class MimeTypesData;
 
 
@@ -51,6 +53,31 @@ public:
     MimeTypes(const MimeTypes &);
     MimeTypes &operator=(const MimeTypes &);
     virtual ~MimeTypes();
+
+    /**
+     * Returns the MIME type that best matches the given first few bytes
+     * of a document stream. Returns application/octet-stream if no better
+     * match is found.
+     * <p>
+     * If multiple matches are found, the best (highest priority) matching
+     * type is returned. If multiple matches are found with the same priority,
+     * then all of these are returned.
+     * <p>
+     * The given byte array is expected to be at least {@link #getMinLength()}
+     * long, or shorter only if the document stream itself is shorter.
+     *
+     * @param data first few bytes of a document stream
+     * @return matching MIME type
+     */
+    QList<MimeType> getMimeType(const QByteArray &d) const;
+
+    /**
+     * Add the specified mime-type in the repository.
+     *
+     * @param type
+     *            is the mime-type to add.
+     */
+    void add(const MimeType &type);
 
 private:
     QSharedDataPointer<MimeTypesData> data;

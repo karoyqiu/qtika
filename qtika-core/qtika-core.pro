@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-QT       -= gui
+QT      -= gui
+QT      += xml
 
 TARGET = qtika-core
 TEMPLATE = lib
@@ -46,7 +47,10 @@ SOURCES += \
     mime/magic.cpp \
     mime/mediatyperegistry.cpp \
     mime/mimetypes.cpp \
-    mime/patterns.cpp
+    mime/patterns.cpp \
+    detect/xmlrootextractor.cpp \
+    detect/textdetector.cpp \
+    detect/textstatistics.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -77,7 +81,10 @@ HEADERS += \
     mime/mimetypes.h \
     mime/patterns.h \
     exception/tikaexception.h \
-    mime/mimetypeexception.h
+    mime/mimetypeexception.h \
+    detect/xmlrootextractor.h \
+    detect/textdetector.h \
+    detect/textstatistics.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
