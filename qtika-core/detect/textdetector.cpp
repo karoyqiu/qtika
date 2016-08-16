@@ -17,8 +17,10 @@
 #include "stable.h"
 #include "textdetector.h"
 
+#include <qiodevicetransactionrollback.h>
+
 #include "mime/mediatype.h"
-#include "qiodevicetransactionrollback.h"
+#include "textstatistics.h"
 
 
 namespace qtika {
@@ -108,7 +110,24 @@ Detector::MediaType TextDetector::detect(QIODevice *input, const Metadata &meta)
 
     qtika::internal::QIODeviceTransactionRollback rollback(input);
 
-    // UNDONE: TextStatistics stats = new TextStatistics();
+    TextStatistics stats;
+    char buffer[1024] = { 0 };
+    qint64 n = 0;
+    qint64 m = input->read(buffer, qMin<qint64>(data->bytesToTest, sizeof(buffer)));
+
+    while (m > 0 && n < data->bytesToTest)
+    {
+        stats.addData(QByteArray::fromRawData(buffer, m), 0, m);
+        n += m;
+        m = input->read(buffer, qMin<qint64>(data->bytesToTest - n, sizeof(buffer)));
+    }
+
+    if (stats.isMostlyAscii() || stats.looksLikeUTF8())
+    {
+        return MediaType::TEXT_PLAIN();
+    }
+
+    return MediaType::OCTET_STREAM();
 }
 
 
