@@ -23,6 +23,7 @@
 #include "metadatatest.h"
 #include "namedetectortest.h"
 #include "magicdetectortest.h"
+#include "textdetectortest.h"
 
 
 int main(int argc, char *argv[])
@@ -45,6 +46,9 @@ int main(int argc, char *argv[])
 
     MagicDetectorTest magicDetectorTest;
     result += QTest::qExec(&magicDetectorTest);
+
+    TextDetectorTest textDetectorTest;
+    result += QTest::qExec(&textDetectorTest);
 
     return result;
 }
