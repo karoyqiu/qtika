@@ -66,7 +66,7 @@ NameDetector::~NameDetector()
 }
 
 
-Detector::MediaType NameDetector::detect(QIODevice *input, const Metadata &meta)
+Detector::MediaType NameDetector::detect(QIODevice *input, const Metadata &meta) const
 {
     Q_UNUSED(input)
 

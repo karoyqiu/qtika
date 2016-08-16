@@ -99,7 +99,7 @@ TextDetector::~TextDetector()
 }
 
 
-Detector::MediaType TextDetector::detect(QIODevice *input, const Metadata &meta)
+Detector::MediaType TextDetector::detect(QIODevice *input, const Metadata &meta) const
 {
     Q_UNUSED(meta)
 

@@ -66,7 +66,7 @@ public:
      * @return detected media type, or <code>application/octet-stream</code>
      * @throws IOException if the document input stream could not be read
      */
-    virtual MediaType detect(QIODevice *input, const Metadata &meta) = 0;
+    virtual MediaType detect(QIODevice *input, const Metadata &meta) const = 0;
 };
 
 

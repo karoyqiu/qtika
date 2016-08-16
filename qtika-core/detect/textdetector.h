@@ -64,7 +64,7 @@ public:
      * @return "text/plain" if the input stream suggest a text document,
      *         "application/octet-stream" otherwise
      */
-    virtual MediaType detect(QIODevice *input, const Metadata &meta) Q_DECL_OVERRIDE;
+    virtual MediaType detect(QIODevice *input, const Metadata &meta) const Q_DECL_OVERRIDE;
 
 public:
     /**

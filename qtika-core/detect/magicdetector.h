@@ -95,7 +95,7 @@ public:
      * @param input document input stream, or <code>null</code>
      * @param metadata ignored
      */
-    virtual MediaType detect(QIODevice *input, const Metadata &meta) Q_DECL_OVERRIDE;
+    virtual MediaType detect(QIODevice *input, const Metadata &meta) const Q_DECL_OVERRIDE;
 
 public:
     static MagicDetector parse(const MediaType &mediaType, const QString &type, const QString &offset,

@@ -96,7 +96,7 @@ public:
      * @param metadata input metadata, possibly with a RESOURCE_NAME_KEY value
      * @return detected media type, or <code>application/octet-stream</code>
      */
-    virtual MediaType detect(QIODevice *input, const Metadata &meta) Q_DECL_OVERRIDE;
+    virtual MediaType detect(QIODevice *input, const Metadata &meta) const Q_DECL_OVERRIDE;
 
 private:
     QSharedDataPointer<NameDetectorData> data;

@@ -370,7 +370,7 @@ MagicDetector::~MagicDetector()
 }
 
 
-MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta)
+MediaType MagicDetector::detect(QIODevice *input, const Metadata &meta) const
 {
     Q_UNUSED(meta)
 
