@@ -50,7 +50,9 @@ SOURCES += \
     mime/patterns.cpp \
     detect/xmlrootextractor.cpp \
     detect/textdetector.cpp \
-    detect/textstatistics.cpp
+    detect/textstatistics.cpp \
+    mime/mimetypesfactory.cpp \
+    mimetypesreadermetkeys.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -84,7 +86,9 @@ HEADERS += \
     mime/mimetypeexception.h \
     detect/xmlrootextractor.h \
     detect/textdetector.h \
-    detect/textstatistics.h
+    detect/textstatistics.h \
+    mime/mimetypesfactory.h \
+    mimetypesreadermetkeys.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 
