@@ -16,8 +16,8 @@
  */
 #pragma once
 
-#include <QtGlobal>
-#include <QSharedPointer>
+#include "clause.h"
+#include "detect/magicdetector.h"
 
 
 namespace qtika {
@@ -25,30 +25,31 @@ namespace qtika {
 namespace mime {
 
 
+class MediaType;
+class MagicMatchData;
+
+
 /**
- * Defines a clause to be evaluated.
+ * Defines a magic match.
  */
-class Clause
+class MagicMatch : public Clause
 {
 public:
-    virtual ~Clause() Q_DECL_EQ_DEFAULT;
+    MagicMatch(const MediaType &mediaType,
+               const QString &type, const QString &offset, const QString &value, const QString &mask);
+    MagicMatch(const MagicMatch &);
+    MagicMatch &operator=(const MagicMatch &);
+    ~MagicMatch();
 
-    /**
-     * Evaluates this clause with the specified chunk of data.
-     */
-    virtual bool eval(const QByteArray &data) const = 0;
+    detect::MagicDetector detector() const;
 
-    /**
-     * Returns the size of this clause. The size of a clause is the number of
-     * chars it is composed of.
-     */
-    virtual int size() const = 0;
+    virtual bool eval(const QByteArray &data) const Q_DECL_OVERRIDE;
+    virtual int size() const Q_DECL_OVERRIDE;
+    virtual QString toString() const Q_DECL_OVERRIDE;
 
-    virtual QString toString() const = 0;
+private:
+    QSharedDataPointer<MagicMatchData> data_;
 };
-
-
-typedef QSharedPointer<Clause> ClausePtr;
 
 
 }       // namespace mime

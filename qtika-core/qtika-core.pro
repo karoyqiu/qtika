@@ -52,7 +52,11 @@ SOURCES += \
     detect/textdetector.cpp \
     detect/textstatistics.cpp \
     mime/mimetypesfactory.cpp \
-    mimetypesreadermetkeys.cpp
+    mimetypesreadermetkeys.cpp \
+    mime/mimetypesreader.cpp \
+    mime/orclause.cpp \
+    mime/andclause.cpp \
+    mime/magicmatch.cpp
 
 HEADERS += \
     qtika-core-global.h \
@@ -88,7 +92,11 @@ HEADERS += \
     detect/textdetector.h \
     detect/textstatistics.h \
     mime/mimetypesfactory.h \
-    mimetypesreadermetkeys.h
+    mimetypesreadermetkeys.h \
+    mime/mimetypesreader.h \
+    mime/orclause.h \
+    mime/andclause.h \
+    mime/magicmatch.h
 
 #PRECOMPILED_HEADER = qtika-core-global.h
 

@@ -16,8 +16,9 @@
  */
 #pragma once
 
-#include <QtGlobal>
-#include <QSharedPointer>
+#include "clause.h"
+
+#include <QSharedDataPointer>
 
 
 namespace qtika {
@@ -25,30 +26,23 @@ namespace qtika {
 namespace mime {
 
 
-/**
- * Defines a clause to be evaluated.
- */
-class Clause
+class OrClauseData;
+
+class OrClause : public Clause
 {
 public:
-    virtual ~Clause() Q_DECL_EQ_DEFAULT;
+    explicit OrClause(const QList<ClausePtr> clauses);
+    OrClause(const OrClause &);
+    OrClause &operator=(const OrClause &);
+    ~OrClause();
 
-    /**
-     * Evaluates this clause with the specified chunk of data.
-     */
-    virtual bool eval(const QByteArray &data) const = 0;
+    virtual bool eval(const QByteArray &data) const Q_DECL_OVERRIDE;
+    virtual int size() const Q_DECL_OVERRIDE;
+    virtual QString toString() const Q_DECL_OVERRIDE;
 
-    /**
-     * Returns the size of this clause. The size of a clause is the number of
-     * chars it is composed of.
-     */
-    virtual int size() const = 0;
-
-    virtual QString toString() const = 0;
+private:
+    QSharedDataPointer<OrClauseData> data_;
 };
-
-
-typedef QSharedPointer<Clause> ClausePtr;
 
 
 }       // namespace mime

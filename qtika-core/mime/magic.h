@@ -37,7 +37,7 @@ class MimeType;
 class Magic : public Clause
 {
 public:
-    Magic(const MimeType &type, int priority, Clause *clause);
+    Magic(const MimeType &type, int priority, ClausePtr clause);
     Magic(const Magic &);
     Magic &operator=(const Magic &);
     virtual ~Magic();

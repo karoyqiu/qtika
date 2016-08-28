@@ -32,19 +32,18 @@ public:
 
     MimeType type;
     int priority;
-    Clause *clause;
+    ClausePtr clause;
     QString string;
 };
 
 
 MagicData::MagicData()
     : priority(0)
-    , clause(Q_NULLPTR)
 {
 }
 
 
-Magic::Magic(const MimeType &type, int priority, Clause *clause)
+Magic::Magic(const MimeType &type, int priority, ClausePtr clause)
     : data(new MagicData)
 {
     data->type = type;
