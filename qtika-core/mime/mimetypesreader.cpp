@@ -18,7 +18,9 @@
 #include "mimetypesreader.h"
 
 #include <QEnableSharedFromThis>
+#include <QUrl>
 
+#include "magic.h"
 #include "mimetype.h"
 #include "mimetypes.h"
 #include "clause.h"
@@ -219,12 +221,64 @@ bool MimeTypesReader::startElement(const QString &namespaceURI, const QString &l
 
 bool MimeTypesReader::endElement(const QString &namespaceURI, const QString &localName, const QString &qName)
 {
+    if (!data_->type.isNull())
+    {
+        if (qName == MIME_TYPE_TAG())
+        {
+            data_->type = MimeType();
+        }
+        else if (qName == COMMENT_TAG())
+        {
+            data_->type.setDescription(data_->characters.trimmed());
+            data_->characters.clear();
+        }
+        else if (qName == ACRONYM_TAG())
+        {
+            data_->type.setAcronym(data_->characters.trimmed());
+            data_->characters.clear();
+        }
+        else if (qName == TIKA_UTI_TAG())
+        {
+            data_->type.setUniformTypeIdentifier(data_->characters.trimmed());
+            data_->characters.clear();
+        }
+        else if (qName == TIKA_LINK_TAG())
+        {
+            QUrl url(data_->characters.trimmed());
+
+            if (!url.isValid())
+            {
+                throw std::invalid_argument("Unable to parse link.");
+            }
+
+            data_->type.addLink(url);
+            data_->characters.clear();
+        }
+        else if (qName == MATCH_TAG())
+        {
+            data_->current->stop();
+        }
+        else if (qName == MAGIC_TAG())
+        {
+            for (auto clause : data_->current->clauses())
+            {
+                data_->type.addMagic(Magic(data_->type, data_->priority, clause));
+            }
+
+            data_->current.reset();
+        }
+    }
+
+    return true;
 }
 
 
 bool MimeTypesReader::characters(const QString &ch)
 {
+    data_->characters.append(ch);
+    return true;
 }
+
 
 }       // namespace mime
 
