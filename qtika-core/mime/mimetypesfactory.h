@@ -76,7 +76,6 @@ public:
      */
     static MimeTypes create(const QString &filePath);
 
-#if 0
     /**
      * Creates and returns a MimeTypes instance. The core mimetypes
      *  will be loaded from the specified file path, and any custom
@@ -91,7 +90,6 @@ public:
      * @throws MimeTypeException if the type configuration is invalid
      */
     static MimeTypes create(const QString &coreFilePath, const QString &extensionFilePath);
-#endif
 };
 
 

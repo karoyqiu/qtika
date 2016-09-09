@@ -104,12 +104,34 @@ MimeTypes MimeTypesFactory::create(const QString &filePath)
 {
     QFile file(filePath);
 
-    if (!file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         return MimeTypes();
     }
 
     return create(&file);
+}
+
+
+MimeTypes MimeTypesFactory::create(const QString &coreFilePath, const QString &extensionFilePath)
+{
+    QList<QIODevice *> files;
+
+    QFile core(coreFilePath);
+
+    if (core.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        files.append(&core);
+    }
+
+    QFile extension(extensionFilePath);
+
+    if (extension.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        files.append(&extension);
+    }
+
+    return create(files);
 }
 
 

@@ -216,6 +216,9 @@ public:
      */
     virtual MediaType detect(QIODevice *input, const Metadata &meta) const Q_DECL_OVERRIDE;
 
+public:
+    static MimeTypes defaultMimeTypes();
+
 private:
     QSharedDataPointer<MimeTypesData> data;
 };

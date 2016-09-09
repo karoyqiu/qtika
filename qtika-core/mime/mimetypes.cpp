@@ -28,6 +28,7 @@
 #include "magic.h"
 #include "mediatyperegistry.h"
 #include "metadata/metadata.h"
+#include "mimetypesfactory.h"
 #include "patterns.h"
 
 
@@ -96,7 +97,6 @@ public:
     /** Sorted list of all registered rootXML */
     QList<MimeType> xmls;
 
-    //QMutex *mutex;
 };
 
 
@@ -504,6 +504,14 @@ MediaType MimeTypes::detect(QIODevice *input, const Metadata &meta) const
     }
 
     return possibleTypes.first().type();
+}
+
+
+MimeTypes MimeTypes::defaultMimeTypes()
+{
+    static MimeTypes DEFAULT_TYPES = MimeTypesFactory::create(QS("tika-mimetypes.xml"),
+                                                              QS("custom-mimetypes.xml"));
+    return DEFAULT_TYPES;
 }
 
 
