@@ -14,7 +14,7 @@
 # limitations under the License.
 
 QT      -= gui
-QT      += xml
+QT      += xml network
 
 TARGET = qtika-core
 TEMPLATE = lib

@@ -30,14 +30,16 @@ SOURCES += main.cpp \
     metadatatest.cpp \
     namedetectortest.cpp \
     magicdetectortest.cpp \
-    textdetectortest.cpp
+    textdetectortest.cpp \
+    mimetypesreadertest.cpp
 
 HEADERS += \
     mediatypetest.h \
     metadatatest.h \
     namedetectortest.h \
     magicdetectortest.h \
-    textdetectortest.h
+    textdetectortest.h \
+    mimetypesreadertest.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/release/ -lqtika-core
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../qtika-core/debug/ -lqtika-core

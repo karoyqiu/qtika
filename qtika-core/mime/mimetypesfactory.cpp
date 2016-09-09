@@ -17,6 +17,13 @@
 #include "stable.h"
 #include "mimetypesfactory.h"
 
+#include <QDomDocument>
+#include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
+#include "mimetypesreader.h"
+
 
 namespace qtika {
 
@@ -28,6 +35,82 @@ MimeTypes MimeTypesFactory::create()
     return MimeTypes();
 }
 
+
+MimeTypes MimeTypesFactory::create(const QDomDocument &doc)
+{
+    MimeTypes mimeTypes;
+    MimeTypesReader reader(mimeTypes);
+    reader.read(doc);
+    mimeTypes.init();
+    return mimeTypes;
+}
+
+
+MimeTypes MimeTypesFactory::create(const QList<QIODevice *> &streams)
+{
+    MimeTypes mimeTypes;
+    MimeTypesReader reader(mimeTypes);
+
+    for (QIODevice *s : streams)
+    {
+        reader.read(s);
+    }
+
+    mimeTypes.init();
+    return mimeTypes;
+}
+
+
+MimeTypes MimeTypesFactory::create(QIODevice *stream)
+{
+    return create(QList<QIODevice *> { stream });
+}
+
+
+MimeTypes MimeTypesFactory::create(const QList<QUrl> &urls)
+{
+    QNetworkAccessManager manager;
+    QList<QNetworkReply *> replies;
+    QList<QIODevice *> streams;
+
+    for (const QUrl &url : urls)
+    {
+        replies.append(manager.get(QNetworkRequest(url)));
+    }
+
+    for (QNetworkReply *reply : replies)
+    {
+        if (!reply->isFinished())
+        {
+            QEventLoop loop;
+            QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+            loop.exec();
+        }
+
+        streams.append(reply);
+    }
+
+    return create(streams);
+}
+
+
+MimeTypes MimeTypesFactory::create(const QUrl &url)
+{
+    return create(QList<QUrl>{ url });
+}
+
+
+MimeTypes MimeTypesFactory::create(const QString &filePath)
+{
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        return MimeTypes();
+    }
+
+    return create(&file);
+}
 
 
 }       // namespace mime

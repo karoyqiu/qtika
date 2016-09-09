@@ -22,6 +22,9 @@
 #include "mimetypesreadermetkeys.h"
 
 
+class QDomDocument;
+
+
 namespace qtika {
 
 namespace mime {
@@ -92,12 +95,13 @@ class MimeTypesReaderData;
 class MimeTypesReader : public QXmlDefaultHandler, public MimeTypesReaderMetKeys
 {
 public:
-    explicit MimeTypesReader(const MimeTypes &types);
+    explicit MimeTypesReader(MimeTypes &types);
     MimeTypesReader(const MimeTypesReader &);
     MimeTypesReader &operator=(const MimeTypesReader &);
     virtual ~MimeTypesReader();
 
     void read(QIODevice *stream);
+    void read(const QDomDocument &doc);
 
 public:
     virtual bool resolveEntity(const QString &publicId, const QString &systemId, QXmlInputSource *&ret) Q_DECL_OVERRIDE;

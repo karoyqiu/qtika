@@ -17,8 +17,10 @@
 #include "stable.h"
 #include "mimetypesreader.h"
 
+#include <QDomDocument>
 #include <QEnableSharedFromThis>
 #include <QUrl>
+#include <QXmlSimpleReader>
 
 #include "magic.h"
 #include "mimetype.h"
@@ -86,7 +88,7 @@ void ClauseRecord::stop()
 class MimeTypesReaderData : public QSharedData
 {
 public:
-    MimeTypes types;
+    MimeTypes *types;
 
     /** Current type */
     MimeType type;
@@ -99,10 +101,10 @@ public:
 };
 
 
-MimeTypesReader::MimeTypesReader(const MimeTypes &types)
+MimeTypesReader::MimeTypesReader(MimeTypes &types)
     : data_(new MimeTypesReaderData)
 {
-    data_->types = types;
+    data_->types = &types;
     data_->priority = 0;
 }
 
@@ -131,6 +133,34 @@ MimeTypesReader::~MimeTypesReader()
 
 void MimeTypesReader::read(QIODevice *stream)
 {
+    QXmlSimpleReader reader;
+    reader.setFeature(QS("http://xml.org/sax/features/namespaces"), false);
+    reader.setContentHandler(this);
+    reader.setEntityResolver(this);
+
+    QXmlInputSource source(stream);
+
+    if (!reader.parse(source))
+    {
+        throw std::runtime_error("Invalid type configuration.");
+    }
+}
+
+
+void MimeTypesReader::read(const QDomDocument &doc)
+{
+    QXmlSimpleReader reader;
+    reader.setFeature(QS("http://xml.org/sax/features/namespaces"), false);
+    reader.setContentHandler(this);
+    reader.setEntityResolver(this);
+
+    QXmlInputSource source;
+    source.setData(doc.toString());
+
+    if (!reader.parse(source))
+    {
+        throw std::runtime_error("Invalid type configuration.");
+    }
 }
 
 
@@ -150,18 +180,18 @@ bool MimeTypesReader::startElement(const QString &namespaceURI, const QString &l
         if (qName == MIME_TYPE_TAG())
         {
             QString name = atts.value(MIME_TYPE_TYPE_ATTR());
-            data_->type = data_->types.forName(name);
+            data_->type = data_->types->forName(name);
         }
     }
     else if (qName == ALIAS_TAG())
     {
         QString alias = atts.value(ALIAS_TYPE_ATTR());
-        data_->types.addAlias(data_->type, MediaType::parse(alias));
+        data_->types->addAlias(data_->type, MediaType::parse(alias));
     }
     else if (qName == SUB_CLASS_OF_TAG())
     {
         QString parent = atts.value(SUB_CLASS_TYPE_ATTR());
-        data_->types.setSuperType(data_->type, MediaType::parse(parent));
+        data_->types->setSuperType(data_->type, MediaType::parse(parent));
     }
     else if (qName == ACRONYM_TAG() || qName == COMMENT_TAG() || qName == TIKA_LINK_TAG()
              || qName == TIKA_UTI_TAG())
@@ -175,8 +205,8 @@ bool MimeTypesReader::startElement(const QString &namespaceURI, const QString &l
 
         if (!pattern.isEmpty())
         {
-            data_->types.addPattern(data_->type, pattern,
-                                    isRegex.compare(QLatin1String("true"), Qt::CaseInsensitive));
+            data_->types->addPattern(data_->type, pattern,
+                                     isRegex.compare(QLatin1String("true"), Qt::CaseInsensitive));
         }
     }
     else if (qName == ROOT_XML_TAG())
