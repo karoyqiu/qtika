@@ -30,7 +30,7 @@ DateFormat::DateFormat(const QString &format, Qt::TimeSpec spec)
     : format_(format)
     , spec_(spec)
 {
-    if (format.endsWith("Z"))
+    if (format.endsWith(QLatin1String("Z")))
     {
         format_.chop(1);
         spec_ = Qt::TimeZone;

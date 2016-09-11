@@ -58,7 +58,7 @@ public:
     QString toString() const
     {
         // return type_.tostring ...
-        return ", " % namespaceURI_ % ", " % localName_;
+        return QS(", ") % namespaceURI_ % QS(", ") % localName_;
     }
 
 private:
@@ -371,7 +371,7 @@ bool MimeType::isValid(const QString &name)
 
     for (int i = 0; i < name.length(); i++)
     {
-        QChar ch = name.at(i);
+        char ch = name.at(i).toLatin1();
 
         if (ch <= ' ' || ch >= 127 || ch == '(' || ch == ')' ||
                 ch == '<' || ch == '>' || ch == '@' || ch == ',' ||

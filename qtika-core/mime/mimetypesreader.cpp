@@ -224,7 +224,7 @@ bool MimeTypesReader::startElement(const QString &namespaceURI, const QString &l
 
         if (kind.isEmpty())
         {
-            kind = "string";
+            kind = QS("string");
         }
 
         data_->current.reset(new ClauseRecord(QSharedPointer<MagicMatch>::create(data_->type.type(), kind, offset, value, mask)));

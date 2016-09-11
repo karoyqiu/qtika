@@ -49,7 +49,7 @@ Magic::Magic(const MimeType &type, int priority, ClausePtr clause)
     data->type = type;
     data->priority = priority;
     data->clause = clause;
-    data->string = QString("[%1/%2]").arg(priority).arg(clause->toString());
+    data->string = QS("[%1/%2]").arg(priority).arg(clause->toString());
 }
 
 

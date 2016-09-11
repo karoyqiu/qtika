@@ -244,7 +244,7 @@ void Metadata::add(const Property &property, const QString &value)
     }
     else
     {
-        QString message = property.name() % " : " % metadata::toString(property.propertyType());
+        QString message = property.name() % QS(" : ") % metadata::toString(property.propertyType());
         throw PropertyTypeException(message.toStdString());
     }
 }
@@ -384,11 +384,11 @@ QString Metadata::toString() const
     {
         for (const QString &value : iter.value())
         {
-            pairs.append(iter.key() % "=" % value);
+            pairs.append(iter.key() % QS("=") % value);
         }
     }
 
-    return pairs.join(' ');
+    return pairs.join(QLatin1Char(' '));
 }
 
 

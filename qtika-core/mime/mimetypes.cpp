@@ -100,9 +100,9 @@ public:
 };
 
 
-const QString MimeTypesData::OCTET_STREAM("application/octet-stream");
-const QString MimeTypesData::PLAIN_TEXT("text/plain");
-const QString MimeTypesData::XML("application/xml");
+const QString MimeTypesData::OCTET_STREAM(QS("application/octet-stream"));
+const QString MimeTypesData::PLAIN_TEXT(QS("text/plain"));
+const QString MimeTypesData::XML(QS("application/xml"));
 
 
 QList<MimeType> MimeTypesData::applyHint(const QList<MimeType> &possibleTypes, const MimeType &hint) const
@@ -220,7 +220,7 @@ QList<MimeType> MimeTypes::getMimeType(const QByteArray &d)
 
             // When detecting generic XML (or possibly XHTML),
             // extract the root element and match it against known types
-            if (matched.name() == "application/xml" || matched.name() == "text/html")
+            if (matched.name() == QLatin1String("application/xml") || matched.name() == QLatin1String("text/html"))
             {
                 auto rootElement = qtika::detect::XmlRootExtractor::extractRootElement(d);
 
@@ -235,7 +235,7 @@ QList<MimeType> MimeTypes::getMimeType(const QByteArray &d)
                         }
                     }
                 }
-                else if (matched.name() == "application/xml")
+                else if (matched.name() == QLatin1String("application/xml"))
                 {
                     // Downgrade from application/xml to text/plain since
                     // the document seems not to be well-formed.
@@ -464,7 +464,7 @@ MediaType MimeTypes::detect(QIODevice *input, const Metadata &meta) const
 
             if (!path.isEmpty())
             {
-                int slash = path.lastIndexOf('/');
+                int slash = path.lastIndexOf(QLatin1Char('/'));
 
                 if (slash + 1 < path.length())
                 {

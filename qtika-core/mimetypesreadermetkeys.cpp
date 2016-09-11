@@ -25,169 +25,145 @@ namespace mime {
 
 QString MimeTypesReaderMetKeys::MIME_INFO()
 {
-    static const QString s("mime-info");
-    return s;
+    return QS("mime-info");
 }
 
 
 QString MimeTypesReaderMetKeys::MIME_TYPE_TAG()
 {
-    static const QString s("mime-type");
-    return s;
+    return QS("mime-type");
 }
 
 
 QString MimeTypesReaderMetKeys::MIME_TYPE_TYPE_ATTR()
 {
-    static const QString s("type");
-    return s;
+    return QS("type");
 }
 
 
 QString MimeTypesReaderMetKeys::ACRONYM_TAG()
 {
-    static const QString s("acronym");
-    return s;
+    return QS("acronym");
 }
 
 
 QString MimeTypesReaderMetKeys::COMMENT_TAG()
 {
-    static const QString s("_comment");
-    return s;
+    return QS("_comment");
 }
 
 
 QString MimeTypesReaderMetKeys::GLOB_TAG()
 {
-    static const QString s("glob");
-    return s;
+    return QS("glob");
 }
 
 
 QString MimeTypesReaderMetKeys::ISREGEX_ATTR()
 {
-    static const QString s("isregex");
-    return s;
+    return QS("isregex");
 }
 
 
 QString MimeTypesReaderMetKeys::PATTERN_ATTR()
 {
-    static const QString s("pattern");
-    return s;
+    return QS("pattern");
 }
 
 
 QString MimeTypesReaderMetKeys::MAGIC_TAG()
 {
-    static const QString s("magic");
-    return s;
+    return QS("magic");
 }
 
 
 QString MimeTypesReaderMetKeys::ALIAS_TAG()
 {
-    static const QString s("alias");
-    return s;
+    return QS("alias");
 }
 
 
 QString MimeTypesReaderMetKeys::ALIAS_TYPE_ATTR()
 {
-    static const QString s("type");
-    return s;
+    return QS("type");
 }
 
 
 QString MimeTypesReaderMetKeys::ROOT_XML_TAG()
 {
-    static const QString s("root-XML");
-    return s;
+    return QS("root-XML");
 }
 
 
 QString MimeTypesReaderMetKeys::SUB_CLASS_OF_TAG()
 {
-    static const QString s("sub-class-of");
-    return s;
+    return QS("sub-class-of");
 }
 
 
 QString MimeTypesReaderMetKeys::SUB_CLASS_TYPE_ATTR()
 {
-    static const QString s("type");
-    return s;
+    return QS("type");
 }
 
 
 QString MimeTypesReaderMetKeys::MAGIC_PRIORITY_ATTR()
 {
-    static const QString s("priority");
-    return s;
+    return QS("priority");
 }
 
 
 QString MimeTypesReaderMetKeys::MATCH_TAG()
 {
-    static const QString s("match");
-    return s;
+    return QS("match");
 }
 
 
 QString MimeTypesReaderMetKeys::MATCH_OFFSET_ATTR()
 {
-    static const QString s("offset");
-    return s;
+    return QS("offset");
 }
 
 
 QString MimeTypesReaderMetKeys::MATCH_TYPE_ATTR()
 {
-    static const QString s("type");
-    return s;
+    return QS("type");
 }
 
 
 QString MimeTypesReaderMetKeys::MATCH_VALUE_ATTR()
 {
-    static const QString s("value");
-    return s;
+    return QS("value");
 }
 
 
 QString MimeTypesReaderMetKeys::MATCH_MASK_ATTR()
 {
-    static const QString s("mask");
-    return s;
+    return QS("mask");
 }
 
 
 QString MimeTypesReaderMetKeys::NS_URI_ATTR()
 {
-    static const QString s("namespaceURI");
-    return s;
+    return QS("namespaceURI");
 }
 
 
 QString MimeTypesReaderMetKeys::LOCAL_NAME_ATTR()
 {
-    static const QString s("localName");
-    return s;
+    return QS("localName");
 }
 
 
 QString MimeTypesReaderMetKeys::TIKA_LINK_TAG()
 {
-    static const QString s("tika:link");
-    return s;
+    return QS("tika:link");
 }
 
 
 QString MimeTypesReaderMetKeys::TIKA_UTI_TAG()
 {
-    static const QString s("tika:uti");
-    return s;
+    return QS("tika:uti");
 }
 
 

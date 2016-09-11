@@ -108,7 +108,7 @@ int MagicMatch::size() const
 
 QString MagicMatch::toString() const
 {
-    return QString("%1 %2 %3 %4 %5").arg(data_->mediaType.toString()).arg(data_->type)
+    return QS("%1 %2 %3 %4 %5").arg(data_->mediaType.toString()).arg(data_->type)
             .arg(data_->offset).arg(data_->value).arg(data_->mask);
 }
 

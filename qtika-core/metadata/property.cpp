@@ -235,7 +235,7 @@ Property Property::get(const QString &key)
 QSet<Property> Property::properties(const QString &prefix)
 {
     QSet<Property> set;
-    QString p = prefix + ":";
+    QString p = prefix + QS(":");
 
     QMutexLocker locker(&PropertyData::mutex);
 

@@ -59,7 +59,7 @@ bool ExtractorHandler::startElement(const QString &namespaceURI, const QString &
 QName XmlRootExtractor::extractRootElement(QIODevice *stream)
 {
     QXmlSimpleReader reader;
-    reader.setFeature("http://xml.org/sax/features/namespaces", true);
+    reader.setFeature(QS("http://xml.org/sax/features/namespaces"), true);
 
     ExtractorHandler handler;
     reader.setContentHandler(&handler);

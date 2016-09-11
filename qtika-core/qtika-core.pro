@@ -22,6 +22,7 @@ CONFIG += warn_on c++11
 CONFIG += skip_target_version_ext
 
 DEFINES += QTIKACORE_LIBRARY
+DEFINES += QT_NO_CAST_FROM_ASCII
 VERSION = 1.13
 
 SOURCES += \

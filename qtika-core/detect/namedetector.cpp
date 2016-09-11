@@ -76,14 +76,14 @@ Detector::MediaType NameDetector::detect(QIODevice *input, const Metadata &meta)
     if (!name.isEmpty())
     {
         // If the name is a URL, skip the trailing query and fragment parts
-        int pos = name.indexOf('?');
+        int pos = name.indexOf(QLatin1Char('?'));
 
         if (pos != -1)
         {
             name = name.left(pos);
         }
 
-        pos = name.indexOf('#');
+        pos = name.indexOf(QLatin1Char('#'));
 
         if (pos != -1)
         {
@@ -91,14 +91,14 @@ Detector::MediaType NameDetector::detect(QIODevice *input, const Metadata &meta)
         }
 
         // If the name is a URL or a path, skip all but the last component
-        pos = name.lastIndexOf('/');
+        pos = name.lastIndexOf(QLatin1Char('/'));
 
         if (pos != -1)
         {
             name = name.mid(pos + 1);
         }
 
-        pos = name.lastIndexOf('\\');
+        pos = name.lastIndexOf(QLatin1Char('\\'));
 
         if (pos != -1)
         {
@@ -106,7 +106,7 @@ Detector::MediaType NameDetector::detect(QIODevice *input, const Metadata &meta)
         }
 
         // Decode any potential URL encoding
-        pos = name.indexOf('%');
+        pos = name.indexOf(QLatin1Char('%'));
 
         if (pos != -1)
         {

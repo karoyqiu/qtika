@@ -109,7 +109,9 @@ Property TIFF::SOFTWARE()
 
 Property TIFF::ORIENTATION()
 {
-    static const Property p = Property::internalClosedChoice(QS("tiff:Orientation"), { "1", "2", "3", "4", "5", "6", "7", "8" });
+    static const Property p
+            = Property::internalClosedChoice(QS("tiff:Orientation"),
+                { QS("1"), QS("2"), QS("3"), QS("4"), QS("5"), QS("6"), QS("7"), QS("8") });
     return p;
 }
 
@@ -130,7 +132,8 @@ Property TIFF::RESOLUTION_VERTICAL()
 
 Property TIFF::RESOLUTION_UNIT()
 {
-    static const Property p = Property::internalClosedChoice(QS("tiff:ResolutionUnit"), { "Inch", "cm" });
+    static const Property p = Property::internalClosedChoice(QS("tiff:ResolutionUnit"),
+        { QS("Inch"), QS("cm") });
     return p;
 }
 

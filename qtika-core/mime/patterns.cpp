@@ -102,7 +102,7 @@ void PatternsData::addName(const QString &name, const MimeType &type)
     }
     else
     {
-        QString msg = "Conflicting name pattern: " % name;
+        QString msg = QS("Conflicting name pattern: ") % name;
         throw MimeTypeException(msg.toStdString().c_str());
     }
 }
@@ -124,7 +124,7 @@ void PatternsData::addExtension(const QString &extension, const MimeType &type)
     }
     else
     {
-        QString msg = "Conflicting extension pattern: " % extension;
+        QString msg = QS("Conflicting extension pattern: ") % extension;
         throw MimeTypeException(msg.toStdString().c_str());
     }
 }
@@ -151,7 +151,7 @@ void PatternsData::addGlob(const QString &glob, const MimeType &type)
     }
     else
     {
-        QString msg = "Conflicting glob pattern: " % glob;
+        QString msg = QS("Conflicting glob pattern: ") % glob;
         throw MimeTypeException(msg.toStdString().c_str());
     }
 }
@@ -159,25 +159,25 @@ void PatternsData::addGlob(const QString &glob, const MimeType &type)
 
 QString PatternsData::compile(const QString &glob)
 {
-    static const QString specials("\\[]^.-$+(){}|");
+    static const QString specials(QS("\\[]^.-$+(){}|"));
 
-    QString pattern("^");
+    QString pattern(QS("^"));
 
     for (int i = 0; i < glob.length(); i++)
     {
         QChar ch = glob.at(i);
 
-        if (ch == '?')
+        if (ch == QLatin1Char('?'))
         {
-            pattern.append('.');
+            pattern.append(QLatin1Char('.'));
         }
-        else if (ch == '*')
+        else if (ch == QLatin1Char('*'))
         {
-            pattern.append(".*");
+            pattern.append(QS(".*"));
         }
         else if (specials.contains(ch))
         {
-            pattern.append('\\');
+            pattern.append(QLatin1Char('\\'));
             pattern.append(ch);
         }
         else
@@ -186,7 +186,7 @@ QString PatternsData::compile(const QString &glob)
         }
     }
 
-    pattern.append('$');
+    pattern.append(QLatin1Char('$'));
     return pattern;
 }
 
@@ -247,13 +247,13 @@ void Patterns::add(const QString &pattern, bool isRegex, const MimeType &type)
     }
     else
     {
-        if (pattern.indexOf('*') == -1 && pattern.indexOf('?') == -1
-                && pattern.indexOf('[') == -1)
+        if (pattern.indexOf(QLatin1Char('*')) == -1 && pattern.indexOf(QLatin1Char('?')) == -1
+                && pattern.indexOf(QLatin1Char('[')) == -1)
         {
             data->addName(pattern, type);
         }
-        else if (pattern.startsWith('*') && pattern.indexOf('*', 1) == -1
-                 && pattern.indexOf('?') == -1 && pattern.indexOf('[') == -1)
+        else if (pattern.startsWith(QLatin1Char('*')) && pattern.indexOf(QLatin1Char('*'), 1) == -1
+                 && pattern.indexOf(QLatin1Char('?')) == -1 && pattern.indexOf(QLatin1Char('[')) == -1)
         {
             QString extension = pattern.mid(1);
             data->addExtension(extension, type);

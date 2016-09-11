@@ -96,8 +96,8 @@ public:
 const QString MediaTypeData::VALID_CHARS(QS(R"_(([^\(\)<>@,;:\\"\/\[\]\?=\s]+))_"));
 const QRegularExpression MediaTypeData::SPECIAL(QS("([\\(\\)<>@,;:\\\\\"/\\[\\]\\?=])"));
 const QRegularExpression MediaTypeData::SPECIAL_OR_WHITESPACE(QS("[\\(\\)<>@,;:\\\\\"/\\[\\]\\?=\\s]"));
-const QRegularExpression MediaTypeData::TYPE_PATTERN("\\s*" % VALID_CHARS % "\\s*/\\s*" % VALID_CHARS % "\\s*($|;.*)");
-const QRegularExpression MediaTypeData::CHARSET_FIRST_PATTERN("\\s*(charset\\s*=\\s*[^;\\s]+)\\s*;\\s*" % VALID_CHARS % "\\s*/\\s*" % VALID_CHARS % "\\s*");
+const QRegularExpression MediaTypeData::TYPE_PATTERN(QS("\\s*") % VALID_CHARS % QS("\\s*/\\s*") % VALID_CHARS % QS("\\s*($|;.*)"));
+const QRegularExpression MediaTypeData::CHARSET_FIRST_PATTERN(QS("\\s*(charset\\s*=\\s*[^;\\s]+)\\s*;\\s*") % VALID_CHARS % QS("\\s*/\\s*") % VALID_CHARS % QS("\\s*"));
 QHash<QString, MediaType> MediaTypeData::SIMPLE_TYPES;
 
 
@@ -105,9 +105,10 @@ bool MediaTypeData::isSimpleName(const QString &name)
 {
     for (QChar c : name)
     {
-        if (c != '-' && c != '+' && c != '.' && c != '_'
-            && !(c >= '0' && c <= '9')
-            && !(c >= 'a' && c <= 'z'))
+        if (c != QLatin1Char('-') && c != QLatin1Char('+')
+            && c != QLatin1Char('.') && c != QLatin1Char('_')
+            && !(c >= QLatin1Char('0') && c <= QLatin1Char('9'))
+            && !(c >= QLatin1Char('a') && c <= QLatin1Char('z')))
         {
             return false;
         }
@@ -121,12 +122,12 @@ QString MediaTypeData::unquote(const QString &str)
 {
     QString s = str;
 
-    while (s.startsWith('"') || s.startsWith('\''))
+    while (s.startsWith(QLatin1Char('"')) || s.startsWith(QLatin1Char('\'')))
     {
         s.remove(0, 1);
     }
 
-    while (s.endsWith('"') || s.endsWith('\''))
+    while (s.endsWith(QLatin1Char('"')) || s.endsWith(QLatin1Char('\'')))
     {
         s.chop(1);
     }
@@ -154,7 +155,7 @@ MediaType::ParameterMap MediaTypeData::parseParameters(const QString &str)
         QString key = s;
         QString value;
 
-        int semicolon = s.indexOf(';');
+        int semicolon = s.indexOf(QLatin1Char(';'));
 
         if (semicolon != -1)
         {
@@ -166,7 +167,7 @@ MediaType::ParameterMap MediaTypeData::parseParameters(const QString &str)
             s.clear();
         }
 
-        int equals = key.indexOf('=');
+        int equals = key.indexOf(QLatin1Char('='));
 
         if (equals != -1)
         {
@@ -216,7 +217,7 @@ MediaType::MediaType(const QString &type, const QString subtype, const MediaType
 
     data->slash = t.length();
     data->semicolon = data->slash + 1 + sub.length();
-    data->string = t % "/" % sub;
+    data->string = t % QS("/") % sub;
 
     for (auto iter = params.begin(); iter != params.end(); ++iter)
     {
@@ -226,7 +227,7 @@ MediaType::MediaType(const QString &type, const QString subtype, const MediaType
 
     for (auto iter = data->parameters.begin(); iter != data->parameters.end(); ++iter)
     {
-        data->string.append("; " % iter.key() % "=");
+        data->string.append(QS("; ") % iter.key() % QS("="));
 
         auto match = MediaTypeData::SPECIAL_OR_WHITESPACE.match(iter.value());
 
@@ -234,7 +235,7 @@ MediaType::MediaType(const QString &type, const QString subtype, const MediaType
         {
             QString value = iter.value();
             value.replace(MediaTypeData::SPECIAL, QS("\\\\1"));
-            data->string.append("\"" % value % "\"");
+            data->string.append(QS("\"") % value % QS("\""));
         }
         else
         {
@@ -248,7 +249,7 @@ MediaType::MediaType(const QString &str, int slash)
     : MediaType()
 {
     Q_ASSERT(slash != -1);
-    Q_ASSERT(str.at(slash) == '/');
+    Q_ASSERT(str.at(slash) == QLatin1Char('/'));
     Q_ASSERT(MediaTypeData::isSimpleName(str.mid(0, slash)));
     Q_ASSERT(MediaTypeData::isSimpleName(str.mid(slash + 1)));
 
@@ -361,7 +362,7 @@ MediaType MediaType::parse(const QString &s)
 
         if (type.isNull())
         {
-            int slash = s.indexOf('/');
+            int slash = s.indexOf(QLatin1Char('/'));
 
             if (slash == -1)
             {
@@ -424,31 +425,31 @@ QSet<MediaType> MediaType::set(const QStringList &types)
 
 MediaType MediaType::application(const QString &type)
 {
-    return parse("application/" % type);
+    return parse(QS("application/") % type);
 }
 
 
 MediaType MediaType::audio(const QString &type)
 {
-    return parse("audio/" % type);
+    return parse(QS("audio/") % type);
 }
 
 
 MediaType MediaType::image(const QString &type)
 {
-    return parse("image/" % type);
+    return parse(QS("image/") % type);
 }
 
 
 MediaType MediaType::text(const QString &type)
 {
-    return parse("text/" % type);
+    return parse(QS("text/") % type);
 }
 
 
 MediaType MediaType::video(const QString &type)
 {
-    return parse("video/" % type);
+    return parse(QS("video/") % type);
 }
 
 

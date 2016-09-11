@@ -51,7 +51,7 @@ QString DublinCore::PREFIX_DC_TERMS()
 Property DublinCore::FORMAT()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "format");
+                              % QS("format"));
     return p;
 }
 
@@ -59,7 +59,7 @@ Property DublinCore::FORMAT()
 Property DublinCore::IDENTIFIER()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "identifier");
+                              % QS("identifier"));
     return p;
 }
 
@@ -67,7 +67,7 @@ Property DublinCore::IDENTIFIER()
 Property DublinCore::MODIFIED()
 {
     static const Property p = Property::internalDate(PREFIX_DC_TERMS() %
-                              Metadata::NAMESPACE_PREFIX_DELIMITER() % "modified");
+                              Metadata::NAMESPACE_PREFIX_DELIMITER() % QS("modified"));
     return p;
 }
 
@@ -75,7 +75,7 @@ Property DublinCore::MODIFIED()
 Property DublinCore::CONTRIBUTOR()
 {
     static const Property p = Property::internalTextBag(PREFIX_DC() %
-                              Metadata::NAMESPACE_PREFIX_DELIMITER() % "contributor");
+                              Metadata::NAMESPACE_PREFIX_DELIMITER() % QS("contributor"));
     return p;
 }
 
@@ -83,7 +83,7 @@ Property DublinCore::CONTRIBUTOR()
 Property DublinCore::COVERAGE()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "coverage");
+                              % QS("coverage"));
     return p;
 }
 
@@ -91,7 +91,7 @@ Property DublinCore::COVERAGE()
 Property DublinCore::CREATOR()
 {
     static const Property p = Property::internalTextBag(PREFIX_DC() %
-                              Metadata::NAMESPACE_PREFIX_DELIMITER() % "creator");
+                              Metadata::NAMESPACE_PREFIX_DELIMITER() % QS("creator"));
     return p;
 }
 
@@ -99,7 +99,7 @@ Property DublinCore::CREATOR()
 Property DublinCore::CREATED()
 {
     static const Property p = Property::internalDate(PREFIX_DC_TERMS() %
-                              Metadata::NAMESPACE_PREFIX_DELIMITER() % "created");
+                              Metadata::NAMESPACE_PREFIX_DELIMITER() % QS("created"));
     return p;
 }
 
@@ -107,7 +107,7 @@ Property DublinCore::CREATED()
 Property DublinCore::DATE()
 {
     static const Property p = Property::internalDate(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "date");
+                              % QS("date"));
     return p;
 }
 
@@ -115,7 +115,7 @@ Property DublinCore::DATE()
 Property DublinCore::DESCRIPTION()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "description");
+                              % QS("description"));
     return p;
 }
 
@@ -123,7 +123,7 @@ Property DublinCore::DESCRIPTION()
 Property DublinCore::LANGUAGE()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "language");
+                              % QS("language"));
     return p;
 }
 
@@ -131,7 +131,7 @@ Property DublinCore::LANGUAGE()
 Property DublinCore::PUBLISHER()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "publisher");
+                              % QS("publisher"));
     return p;
 }
 
@@ -139,7 +139,7 @@ Property DublinCore::PUBLISHER()
 Property DublinCore::RELATION()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "relation");
+                              % QS("relation"));
     return p;
 }
 
@@ -147,7 +147,7 @@ Property DublinCore::RELATION()
 Property DublinCore::RIGHTS()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "rights");
+                              % QS("rights"));
     return p;
 }
 
@@ -155,7 +155,7 @@ Property DublinCore::RIGHTS()
 Property DublinCore::SOURCE()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "source");
+                              % QS("source"));
     return p;
 }
 
@@ -163,7 +163,7 @@ Property DublinCore::SOURCE()
 Property DublinCore::SUBJECT()
 {
     static const Property p = Property::internalTextBag(PREFIX_DC() %
-                              Metadata::NAMESPACE_PREFIX_DELIMITER() % "title");
+                              Metadata::NAMESPACE_PREFIX_DELIMITER() % QS("title"));
     return p;
 }
 
@@ -171,7 +171,7 @@ Property DublinCore::SUBJECT()
 Property DublinCore::TITLE()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "format");
+                              % QS("format"));
     return p;
 }
 
@@ -179,7 +179,7 @@ Property DublinCore::TITLE()
 Property DublinCore::TYPE()
 {
     static const Property p = Property::internalText(PREFIX_DC() % Metadata::NAMESPACE_PREFIX_DELIMITER()
-                              % "type");
+                              % QS("type"));
     return p;
 }
 

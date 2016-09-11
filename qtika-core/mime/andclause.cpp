@@ -97,7 +97,7 @@ QString AndClause::toString() const
         s.append(c->toString());
     }
 
-    return QString("and { %1 }").arg(s.join(", "));
+    return QS("and { %1 }").arg(s.join(QS(", ")));
 }
 
 

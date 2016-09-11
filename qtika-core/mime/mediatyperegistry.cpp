@@ -174,22 +174,22 @@ MediaType MediaTypeRegistry::superType(const MediaType &type) const
         return type.baseType();
     }
 
-    if (type.subtype().endsWith("+xml"))
+    if (type.subtype().endsWith(QS("+xml")))
     {
         return MediaType::APPLICATION_XML();
     }
 
-    if (type.subtype().endsWith("+zip"))
+    if (type.subtype().endsWith(QS("+zip")))
     {
         return MediaType::APPLICATION_ZIP();
     }
 
-    if (type.type() == "text" && type != MediaType::TEXT_PLAIN())
+    if (type.type() == QLatin1String("text") && type != MediaType::TEXT_PLAIN())
     {
         return MediaType::TEXT_PLAIN();
     }
 
-    if (type.type().contains("empty") && type != MediaType::EMPTY())
+    if (type.type().contains(QS("empty")) && type != MediaType::EMPTY())
     {
         return MediaType::EMPTY();
     }

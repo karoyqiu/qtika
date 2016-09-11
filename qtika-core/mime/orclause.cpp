@@ -97,7 +97,7 @@ QString OrClause::toString() const
         s.append(c->toString());
     }
 
-    return QString("or { %1 }").arg(s.join(", "));
+    return QS("or { %1 }").arg(s.join(QS(", ")));
 }
 
 
